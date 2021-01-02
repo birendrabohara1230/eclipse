@@ -25,6 +25,9 @@ import updateManagement.EditStudentInformation;
 import updatebookinformation.EditBookInformation;
 import updatebookinformation.EditBookInformationCode;
 import updatebookinformation.SelectingAllBooksInDatabase;
+import usermanagement.Deleteuserinformation;
+import usermanagement.Edituserinformation;
+import usermanagement.Showalluser;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -198,6 +201,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 	private JLabel studentname;
 	private JLabel studentfullname;
 	private JLabel nostudentid;
+	private JComboBox showallbookselect;
 
 
 	/**
@@ -339,14 +343,32 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mnNewMenu_3.add(mntmNewMenuItem_4);
 		
 		mntmNewMenuItem_7 = new JMenuItem("Edit user information");
+		mntmNewMenuItem_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Edituserinformation edituser = new Edituserinformation();
+				edituser.setVisible(true);
+			}
+		});
 		mntmNewMenuItem_7.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnNewMenu_3.add(mntmNewMenuItem_7);
 		
 		mntmNewMenuItem_8 = new JMenuItem("Delete user information");
+		mntmNewMenuItem_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Deleteuserinformation deleteuser = new Deleteuserinformation();
+				deleteuser.setVisible(true);
+			}
+		});
 		mntmNewMenuItem_8.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnNewMenu_3.add(mntmNewMenuItem_8);
 		
 		mntmNewMenuItem_9 = new JMenuItem("Show all user");
+		mntmNewMenuItem_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Showalluser alluser = new Showalluser();
+				alluser.setVisible(true);
+			}
+		});
 		mnNewMenu_3.add(mntmNewMenuItem_9);
 		
 		mnNewMenu_4 = new JMenu("Book");
@@ -1422,7 +1444,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		showallbook.setBackground(new Color(60, 179, 113));
 		layeredPane_1.add(showallbook, "name_11632278757300");
 		
-		lblNewLabel_32 = new JLabel("Search by book number");
+		lblNewLabel_32 = new JLabel("Search by");
 		lblNewLabel_32.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		showallbookbooknumber = new JTextField();
@@ -1452,29 +1474,43 @@ public class StudentInformationAndBookDetails extends JFrame {
 		showallbooknobook = new JLabel("");
 		showallbooknobook.setForeground(new Color(255, 0, 0));
 		showallbooknobook.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		
+		showallbookselect = new JComboBox();
+		showallbookselect.setModel(new DefaultComboBoxModel(new String[] {"book number", "book name", "author", "department"}));
+		showallbookselect.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GroupLayout gl_showallbook = new GroupLayout(showallbook);
 		gl_showallbook.setHorizontalGroup(
 			gl_showallbook.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_showallbook.createSequentialGroup()
 					.addGap(10)
-					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 1064, Short.MAX_VALUE))
+					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 1116, Short.MAX_VALUE))
 				.addGroup(gl_showallbook.createSequentialGroup()
-					.addGap(91)
-					.addComponent(lblNewLabel_32, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
-					.addGap(22)
-					.addGroup(gl_showallbook.createParallelGroup(Alignment.LEADING)
-						.addComponent(showallbooknobook, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
-						.addComponent(showallbookbooknumber, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
-					.addGap(570))
+					.addGap(69)
+					.addComponent(showallbookbooknumber, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE)
+					.addGap(51)
+					.addGroup(gl_showallbook.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_showallbook.createSequentialGroup()
+							.addComponent(showallbooknobook, GroupLayout.PREFERRED_SIZE, 186, GroupLayout.PREFERRED_SIZE)
+							.addGap(378))
+						.addGroup(gl_showallbook.createSequentialGroup()
+							.addComponent(lblNewLabel_32, GroupLayout.PREFERRED_SIZE, 104, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(showallbookselect, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(321))))
 		);
 		gl_showallbook.setVerticalGroup(
 			gl_showallbook.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_showallbook.createSequentialGroup()
-					.addGap(10)
-					.addGroup(gl_showallbook.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(showallbookbooknumber, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_32, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(12)
+					.addGroup(gl_showallbook.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_showallbook.createSequentialGroup()
+							.addGap(10)
+							.addGroup(gl_showallbook.createParallelGroup(Alignment.BASELINE)
+								.addComponent(showallbookbooknumber, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_32, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_showallbook.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(showallbookselect, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)))
+					.addGap(16)
 					.addComponent(showallbooknobook, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE)
@@ -1782,9 +1818,21 @@ public void addstudentinformationintodatabase() {
      	public void searchbookbybooknumber() {
     		Statement st = null;
     		ResultSet rs = null;
+    		String query = null;
     		try {
     			Connection connection = DatabaseConnection.getConnection();
-    			String query = "select * from bookinformation where book_number like  '%"+showallbookbooknumber.getText()+"%'";
+    			String select = (String) showallbookselect.getSelectedItem();
+    			if (select.equalsIgnoreCase("book number")) {
+    				 query = "select * from bookinformation where book_number like  '%"+showallbookbooknumber.getText()+"%'";
+    			}else if (select.equalsIgnoreCase("book name")) {
+    				 query = "select * from bookinformation where book_name like  '%"+showallbookbooknumber.getText()+"%'";
+    			}else if(select.equalsIgnoreCase("author")) {
+    				 query = "select * from bookinformation where author like  '%"+showallbookbooknumber.getText()+"%'";
+    			}else if(select.equalsIgnoreCase("department")){
+    				 query = "select * from bookinformation where department like  '%"+showallbookbooknumber.getText()+"%'";
+    			}else {
+    				query = "select * from bookinformation where book_number like  '%"+showallbookbooknumber.getText()+"%'";
+    			} 			
     			st = connection.createStatement();
     			rs = st.executeQuery(query);
     			table_1.setModel(DbUtils.resultSetToTableModel(rs));

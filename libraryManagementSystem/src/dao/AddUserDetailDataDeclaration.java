@@ -2,6 +2,7 @@ package dao;
 
 public class AddUserDetailDataDeclaration {
 			int userid;
+			int useridnew;
 			String username;
 			String password;
 			String phone;
@@ -71,4 +72,11 @@ public class AddUserDetailDataDeclaration {
 			public void setAddress(String address) {
 				this.address = address;
 			}
+			public int getUseridnew() {
+				return useridnew;
+			}
+			public void setUseridnew(int useridnew) {
+				this.useridnew = useridnew;
+			}
+			
 }	
