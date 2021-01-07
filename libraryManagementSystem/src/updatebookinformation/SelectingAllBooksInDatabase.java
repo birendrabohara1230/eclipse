@@ -9,11 +9,14 @@ import javax.swing.border.EmptyBorder;
 
 import databaseConnection.DatabaseConnection;
 import net.proteanit.sql.DbUtils;
+import searchManagement.StudentInformationAndBookDetails;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -51,7 +54,9 @@ public class SelectingAllBooksInDatabase extends JFrame {
 	 * Create the frame.
 	 */
 	public SelectingAllBooksInDatabase() {
+		setTitle("show all books");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setBounds(100, 100, 973, 659);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -9,11 +9,14 @@ import javax.swing.border.EmptyBorder;
 
 import bookInformation.BookInformation;
 import dao.StudentInformation;
+import searchManagement.StudentInformationAndBookDetails;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -46,7 +49,9 @@ public class ReturnBook extends JFrame {
 	 * Create the frame.
 	 */
 	public ReturnBook() {
+		setTitle("return book");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setBounds(490 , 200, 596, 298);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

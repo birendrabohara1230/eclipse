@@ -71,6 +71,7 @@ public class AddUserDetailDataIntoDatabase extends JFrame {
 	 * Create the frame.
 	 */
 	public AddUserDetailDataIntoDatabase() {
+		setTitle("add user information");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setBackground(new Color(192, 192, 192));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

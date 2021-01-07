@@ -6,10 +6,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import searchManagement.StudentInformationAndBookDetails;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -47,7 +52,11 @@ public class AddBookInformationIntoDatabase extends JFrame {
 	 * Create the frame.
 	 */
 	public AddBookInformationIntoDatabase() {
+		setResizable(false);
+		setAlwaysOnTop(true);
+		setTitle("add book information");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setBounds(100, 100, 846, 388);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -97,7 +106,7 @@ public class AddBookInformationIntoDatabase extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnNewButton.setBounds(392, 195, 65, 30);
+		btnNewButton.setBounds(392, 195, 85, 30);
 		contentPane.add(btnNewButton);
 		
 	    department = new JComboBox();

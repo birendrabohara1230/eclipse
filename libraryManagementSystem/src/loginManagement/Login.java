@@ -59,6 +59,7 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setTitle("login");
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,7 +110,7 @@ public class Login extends JFrame {
 		
 		JCheckBox showpassword = new JCheckBox("Show password");
 		showpassword.setBounds(203, 160, 164, 28);
-		showpassword.setBackground(new Color(255, 248, 220));
+		showpassword.setBackground(Color.GRAY);
 		showpassword.setBorder(null);
 		showpassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

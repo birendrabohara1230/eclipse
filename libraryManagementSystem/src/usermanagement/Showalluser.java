@@ -8,9 +8,12 @@ import javax.swing.border.EmptyBorder;
 
 import databaseConnection.DatabaseConnection;
 import net.proteanit.sql.DbUtils;
+import searchManagement.StudentInformationAndBookDetails;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -21,6 +24,7 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.awt.Window.Type;
 
 public class Showalluser extends JFrame {
 
@@ -49,7 +53,9 @@ public class Showalluser extends JFrame {
 	 * Create the frame.
 	 */
 	public Showalluser() {
+		setTitle("show all user");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setBounds(100, 100, 1015, 532);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

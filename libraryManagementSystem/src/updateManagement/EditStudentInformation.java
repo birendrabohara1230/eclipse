@@ -63,6 +63,7 @@ public class EditStudentInformation extends JFrame {
 	 * Create the frame.
 	 */
 	public EditStudentInformation() {
+		setTitle("edit student information");
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

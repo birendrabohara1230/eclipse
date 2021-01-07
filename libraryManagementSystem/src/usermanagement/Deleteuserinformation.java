@@ -9,11 +9,13 @@ import javax.swing.border.EmptyBorder;
 
 import dao.AddUserDetailDataDeclaration;
 import databaseConnection.DatabaseConnection;
+import searchManagement.StudentInformationAndBookDetails;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -69,7 +71,9 @@ public class Deleteuserinformation extends JFrame {
 	 * Create the frame.
 	 */
 	public Deleteuserinformation() {
+		setTitle("delete user information");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setBounds(100, 100, 679, 495);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -9,11 +9,14 @@ import javax.swing.border.EmptyBorder;
 
 import bookInformation.BookInformation;
 import databaseConnection.DatabaseConnection;
+import searchManagement.StudentInformationAndBookDetails;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -55,7 +58,9 @@ public class EditBookInformation extends JFrame {
 	 * Create the frame.
 	 */
 	public EditBookInformation() {
+		setTitle("edit book information");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setBounds(100, 100, 697, 556);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

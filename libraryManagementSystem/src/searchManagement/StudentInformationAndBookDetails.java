@@ -202,6 +202,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 	private JLabel studentfullname;
 	private JLabel nostudentid;
 	private JComboBox showallbookselect;
+	private JMenuItem mntmNewMenuItem_14;
 
 
 	/**
@@ -246,9 +247,10 @@ public class StudentInformationAndBookDetails extends JFrame {
 	 */
 	@SuppressWarnings("deprecation")
 	public StudentInformationAndBookDetails() {
+		setTitle("student and book information");
 		setBackground(Color.WHITE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		/*
 		 * it fits the opening Jframe just to fit the screen of the given device.
 		 */
@@ -280,10 +282,23 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		mntmNewMenuItem_10 = new JMenuItem("Edit student information");
+		mntmNewMenuItem_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				EditStudentInformation editstudent = new EditStudentInformation();
+				editstudent.setVisible(true);
+			}
+		});
 		mntmNewMenuItem_10.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnNewMenu.add(mntmNewMenuItem_10);
 		
 		mntmNewMenuItem_11 = new JMenuItem("Delete student information");
+		mntmNewMenuItem_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DeleteStudentInformationFromDatabase deletestudent = new DeleteStudentInformationFromDatabase();
+				deletestudent.setVisible(true);
+			}
+		});
 		mntmNewMenuItem_11.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnNewMenu.add(mntmNewMenuItem_11);
 		
@@ -310,6 +325,26 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnNewMenu_1.add(mntmNewMenuItem_1);
 		
+		mntmNewMenuItem_14 = new JMenuItem("Edit user information");
+		mntmNewMenuItem_14.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Edituserinformation edituser = new Edituserinformation();
+				edituser.setVisible(true);
+			}
+		});
+		mntmNewMenuItem_14.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnNewMenu_1.add(mntmNewMenuItem_14);
+		
+		JMenuItem mntmNewMenuItem_15 = new JMenuItem("Edit book information");
+		mntmNewMenuItem_15.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EditBookInformation editbook = new EditBookInformation();
+				editbook.setVisible(true);
+			}
+		});
+		mntmNewMenuItem_15.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnNewMenu_1.add(mntmNewMenuItem_15);
+		
 		mnNewMenu_2 = new JMenu("Delete");
 		mnNewMenu_2.setAlignmentX(Component.LEFT_ALIGNMENT);
 		mnNewMenu_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -326,6 +361,27 @@ public class StudentInformationAndBookDetails extends JFrame {
 		});
 		mntmNewMenuItem_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnNewMenu_2.add(mntmNewMenuItem_2);
+		
+		JMenuItem mntmNewMenuItem_16 = new JMenuItem("Delete user information");
+		mntmNewMenuItem_16.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Deleteuserinformation deleteuser = new Deleteuserinformation();
+				deleteuser.setVisible(true);
+			}
+		});
+		mntmNewMenuItem_16.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnNewMenu_2.add(mntmNewMenuItem_16);
+		
+		JMenuItem mntmNewMenuItem_17 = new JMenuItem("Delete book information");
+		mntmNewMenuItem_17.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DeleteStudentInformationFromDatabase deletebook = new DeleteStudentInformationFromDatabase();
+				deletebook.setVisible(true);
+			
+			}
+		});
+		mntmNewMenuItem_17.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		mnNewMenu_2.add(mntmNewMenuItem_17);
 		
 		mnNewMenu_3 = new JMenu("User");
 		mnNewMenu_3.setFont(new Font("Segoe UI", Font.PLAIN, 14));
