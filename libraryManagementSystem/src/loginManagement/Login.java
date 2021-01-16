@@ -32,6 +32,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Color;
+import javax.swing.JMenuBar;
 
 public class Login extends JFrame {
 
@@ -59,32 +60,34 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		setBackground(Color.GRAY);
+		setAlwaysOnTop(true);
 		setTitle("login");
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(490 , 200, 596, 298);
+		setBounds(490 , 200, 921, 447);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(128, 128, 128));
+		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("Username");
-		lblNewLabel.setBounds(49, 41, 144, 36);
+		lblNewLabel.setBounds(190, 101, 144, 36);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(49, 87, 121, 36);
+		lblPassword.setBounds(190, 147, 121, 36);
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		username = new JTextField();
-		username.setBounds(203, 44, 294, 32);
+		username.setBounds(356, 107, 294, 32);
 		username.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		username.setBorder(null);
 		username.setColumns(10);
 		
 		password = new JPasswordField();
-		password.setBounds(203, 88, 294, 35);
+		password.setBounds(356, 149, 294, 35);
 		password.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -98,7 +101,7 @@ public class Login extends JFrame {
 		password.setBorder(null);
 		
 		JButton btnNewButton = new JButton("Login");
-		btnNewButton.setBounds(203, 198, 98, 36);
+		btnNewButton.setBounds(355, 250, 98, 36);
 		btnNewButton.setBorder(null);
 		btnNewButton.setBackground(new Color(240, 255, 255));
 		btnNewButton.addActionListener(new ActionListener() {
@@ -109,8 +112,8 @@ public class Login extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JCheckBox showpassword = new JCheckBox("Show password");
-		showpassword.setBounds(203, 160, 164, 28);
-		showpassword.setBackground(Color.GRAY);
+		showpassword.setBounds(356, 212, 164, 28);
+		showpassword.setBackground(Color.LIGHT_GRAY);
 		showpassword.setBorder(null);
 		showpassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -126,7 +129,7 @@ public class Login extends JFrame {
 		showpassword.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JButton btnNewButton_1 = new JButton("Sign Up");
-		btnNewButton_1.setBounds(326, 198, 121, 36);
+		btnNewButton_1.setBounds(528, 250, 121, 36);
 		btnNewButton_1.setBackground(new Color(240, 255, 255));
 		btnNewButton_1.setBorder(null);
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -140,7 +143,7 @@ public class Login extends JFrame {
 	    contentPane.setLayout(null);
 		
 	    usernameempty = new JLabel("");
-	    usernameempty.setBounds(203, 126, 316, 24);
+	    usernameempty.setBounds(356, 178, 316, 24);
 		usernameempty.setForeground(Color.RED);
 		usernameempty.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		contentPane.add(usernameempty);

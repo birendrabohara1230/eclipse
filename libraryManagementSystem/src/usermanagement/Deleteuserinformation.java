@@ -27,6 +27,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Deleteuserinformation extends JFrame {
 
@@ -50,6 +52,7 @@ public class Deleteuserinformation extends JFrame {
 	private JTextField edituserusername;
 	private JTextField edituserpassword;
 	private JTextField edituserphone;
+	private JLabel deleteuseridrequired;
 
 	/**
 	 * Launch the application.
@@ -71,10 +74,12 @@ public class Deleteuserinformation extends JFrame {
 	 * Create the frame.
 	 */
 	public Deleteuserinformation() {
+		setResizable(false);
+		setAlwaysOnTop(true);
 		setTitle("delete user information");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
-		setBounds(100, 100, 679, 495);
+		setBounds(380, 120, 749, 495);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -86,6 +91,12 @@ public class Deleteuserinformation extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		editusersearchuserid = new JTextField();
+		editusersearchuserid.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteuseridrequired.setText(null);
+			}
+		});
 		editusersearchuserid.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {	
@@ -202,6 +213,10 @@ public class Deleteuserinformation extends JFrame {
 		btnNewButton.setForeground(Color.RED);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (editusersearchuserid.getText().isEmpty()) {
+					deleteuseridrequired.setText("*Required");
+					return;
+				}
 				AddUserDetailDataDeclaration user = new AddUserDetailDataDeclaration();
 				Deleteuserinformationdatabasecode delete = new Deleteuserinformationdatabasecode();
 				user.setUserid(Integer.parseInt(editusersearchuserid.getText()));
@@ -222,10 +237,20 @@ public class Deleteuserinformation extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnNewButton.setBounds(316, 403, 85, 26);
+		btnNewButton.setBounds(316, 403, 102, 26);
 		contentPane.add(btnNewButton);
+		
+		deleteuseridrequired = new JLabel("");
+		deleteuseridrequired.setForeground(Color.RED);
+		deleteuseridrequired.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		deleteuseridrequired.setBounds(480, 10, 168, 26);
+		contentPane.add(deleteuseridrequired);
 	}
 	public void showuserinformationinjfield() {
+		if (editusersearchuserid.getText().isEmpty()) {
+			deleteuseridrequired.setText("*Required");
+			return;
+		}
 		Statement st = null;
 		ResultSet rs = null;
 		try {
@@ -254,5 +279,4 @@ public class Deleteuserinformation extends JFrame {
 			}
 		}
 	}
-	
 }

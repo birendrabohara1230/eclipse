@@ -54,6 +54,8 @@ public class SelectingAllBooksInDatabase extends JFrame {
 	 * Create the frame.
 	 */
 	public SelectingAllBooksInDatabase() {
+		setResizable(false);
+		setAlwaysOnTop(true);
 		setTitle("show all books");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));

@@ -70,6 +70,8 @@ public class Edituserinformation extends JFrame {
 	 * Create the frame.
 	 */
 	public Edituserinformation() {
+		setResizable(false);
+		setAlwaysOnTop(true);
 		setTitle("edit user information");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));

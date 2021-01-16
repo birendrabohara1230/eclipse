@@ -18,6 +18,7 @@ import databaseConnection.DatabaseConnection;
 import deleteManagement.DeleteStudentInformationFromDatabase;
 import deleteManagement.Deletebookinformation;
 import informationOfStudents.AddInformationOfStudentsIntoDatabase;
+import informationOfStudents.ShowAllStudentInformation;
 import insertionManagement.AddUserDetailDataIntoDatabase;
 import net.proteanit.sql.DbUtils;
 import returnandhistorymanagement.ReturnBook;
@@ -303,6 +304,13 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_11);
 		
 		mntmNewMenuItem_12 = new JMenuItem("Show all student");
+		mntmNewMenuItem_12.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShowAllStudentInformation information = new ShowAllStudentInformation();
+				information.setVisible(true);
+				
+			}
+		});
 		mntmNewMenuItem_12.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnNewMenu.add(mntmNewMenuItem_12);
 		

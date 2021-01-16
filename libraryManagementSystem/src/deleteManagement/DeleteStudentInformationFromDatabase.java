@@ -61,6 +61,7 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 	 * Create the frame.
 	 */
 	public DeleteStudentInformationFromDatabase() {
+		setAlwaysOnTop(true);
 		setBackground(Color.WHITE);
 		setTitle("delete student information");
 		setResizable(false);
@@ -101,7 +102,7 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 		});
 		btnNewButton.setForeground(Color.RED);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnNewButton.setBounds(363, 401, 106, 32);
+		btnNewButton.setBounds(348, 401, 121, 32);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblFirstName = new JLabel("First name");

@@ -60,6 +60,7 @@ public class AddInformationOfStudentsIntoDatabase extends JFrame {
 	 * Create the frame.
 	 */
 	public AddInformationOfStudentsIntoDatabase() {
+		setAlwaysOnTop(true);
 		setTitle("add student information");
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));

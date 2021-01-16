@@ -58,10 +58,12 @@ public class EditBookInformation extends JFrame {
 	 * Create the frame.
 	 */
 	public EditBookInformation() {
+		setResizable(false);
+		setAlwaysOnTop(true);
 		setTitle("edit book information");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
-		setBounds(100, 100, 697, 556);
+		setBounds(100, 100, 736, 446);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

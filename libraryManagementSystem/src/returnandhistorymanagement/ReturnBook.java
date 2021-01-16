@@ -49,6 +49,8 @@ public class ReturnBook extends JFrame {
 	 * Create the frame.
 	 */
 	public ReturnBook() {
+		setResizable(false);
+		setAlwaysOnTop(true);
 		setTitle("return book");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));

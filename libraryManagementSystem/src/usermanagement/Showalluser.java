@@ -11,6 +11,8 @@ import net.proteanit.sql.DbUtils;
 import searchManagement.StudentInformationAndBookDetails;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Toolkit;
 
@@ -53,6 +55,8 @@ public class Showalluser extends JFrame {
 	 * Create the frame.
 	 */
 	public Showalluser() {
+		setResizable(false);
+		setAlwaysOnTop(true);
 		setTitle("show all user");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));

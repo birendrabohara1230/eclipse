@@ -47,6 +47,8 @@ public class StudentandBookNumber extends JFrame {
 	 * Create the frame.
 	 */
 	public StudentandBookNumber() {
+		setResizable(false);
+		setAlwaysOnTop(true);
 		setTitle("add book");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
