@@ -64,7 +64,7 @@ public class Deleteuserinformation extends JFrame {
 					Edituserinformation frame = new Edituserinformation();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e.toString());
 				}
 			}
 		});
@@ -75,11 +75,10 @@ public class Deleteuserinformation extends JFrame {
 	 */
 	public Deleteuserinformation() {
 		setResizable(false);
-		setAlwaysOnTop(true);
 		setTitle("delete user information");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
-		setBounds(380, 120, 749, 495);
+		setBounds(350, 90, 869, 479);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -268,14 +267,14 @@ public class Deleteuserinformation extends JFrame {
 			edituserpassword.setText(rs.getString(8));
 			edituserphone.setText(rs.getString(10));		
 		} catch (Exception e) {
-			// TODO: handle exception
+			JOptionPane.showConfirmDialog(null, e.toString());
 		}
 		finally {
 			try {
 				rs.close();
 				st.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
+				JOptionPane.showConfirmDialog(null, e2.toString());
 			}
 		}
 	}

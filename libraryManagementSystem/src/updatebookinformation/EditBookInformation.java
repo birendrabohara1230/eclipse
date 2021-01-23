@@ -19,6 +19,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.print.attribute.standard.JobPrioritySupported;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -28,6 +29,9 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class EditBookInformation extends JFrame {
 
@@ -37,6 +41,7 @@ public class EditBookInformation extends JFrame {
 	private JTextField author;
 	private JTextField searchbooknumber;
 	private JComboBox department;
+	private JLabel requiredbooknumber;
 
 	/**
 	 * Launch the application.
@@ -48,7 +53,7 @@ public class EditBookInformation extends JFrame {
 					EditBookInformation frame = new EditBookInformation();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+				JOptionPane.showConfirmDialog(null, e.toString());
 				}
 			}
 		});
@@ -59,11 +64,10 @@ public class EditBookInformation extends JFrame {
 	 */
 	public EditBookInformation() {
 		setResizable(false);
-		setAlwaysOnTop(true);
 		setTitle("edit book information");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
-		setBounds(100, 100, 736, 446);
+		setBounds(350, 90, 869, 479);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -113,7 +117,7 @@ public class EditBookInformation extends JFrame {
 		department = new JComboBox();
 		department.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		department.setModel(new DefaultComboBoxModel(new String[] {"Science and technology", "Education", "Management"}));
-		department.setBounds(319, 257, 200, 27);
+		department.setBounds(319, 257, 270, 27);
 		contentPane.add(department);
 		
 		JButton btnNewButton = new JButton("Edit");
@@ -132,6 +136,12 @@ public class EditBookInformation extends JFrame {
 		contentPane.add(lblSearchByBook);
 		
 		searchbooknumber = new JTextField();
+		searchbooknumber.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				clearJField();
+			}
+		});
 		searchbooknumber.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -143,6 +153,7 @@ public class EditBookInformation extends JFrame {
 		});
 		searchbooknumber.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+//				clearJField();
 			}
 		});
 		searchbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -150,9 +161,18 @@ public class EditBookInformation extends JFrame {
 		searchbooknumber.setBorder(null);
 		searchbooknumber.setBounds(319, 40, 200, 27);
 		contentPane.add(searchbooknumber);
+		
+		requiredbooknumber = new JLabel("");
+		requiredbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requiredbooknumber.setForeground(Color.RED);
+		requiredbooknumber.setBounds(589, 40, 233, 27);
+		contentPane.add(requiredbooknumber);
 	}
 	
 	public void searchbookbynumber() {
+		
+		checkJFieldEmptyOrNot();
+		
 		Statement st = null;
 		ResultSet rs = null;
 		try {
@@ -160,12 +180,16 @@ public class EditBookInformation extends JFrame {
 			String sql = " select * from bookinformation where book_number = "+searchbooknumber.getText()+"";
 			st        = connection.createStatement();
 			rs = st.executeQuery(sql);
-			rs.next();
-			booknumberchange.setText(rs.getString(1));
-			bookname.setText(rs.getString(2));
-			author.setText(rs.getString(3));
+			if (rs.next()) {
+				booknumberchange.setText(rs.getString(1));
+				bookname.setText(rs.getString(2));
+				author.setText(rs.getString(3));
+			}else {
+				requiredbooknumber.setText("No book found");
+			}
+		
 		} catch (Exception e) {
-			// TODO: handle exception
+			JOptionPane.showConfirmDialog(null, e.toString());
 		}
 		finally {
 			try {
@@ -178,6 +202,9 @@ public class EditBookInformation extends JFrame {
 	}
 	
 	public void editbookinformation() {
+		
+		checkJFieldEmptyOrNot();
+		
 		BookInformation books = new BookInformation();
 		books.setBooknumber(Integer.parseInt(searchbooknumber.getText()));
 		books.setBooknumberchange(Integer.parseInt(booknumberchange.getText()));
@@ -191,5 +218,28 @@ public class EditBookInformation extends JFrame {
 		}else {
 			JOptionPane.showConfirmDialog(null, "Update not successfull");
 		}
+		clearJField();
+	}
+	
+	void checkJFieldEmptyOrNot() {
+		if(searchbooknumber.getText().isEmpty()) {
+			requiredbooknumber.setText("Required");
+			return;
+		}
+		try {
+			Integer.parseInt(searchbooknumber.getText());
+			
+		}catch(NumberFormatException e) {
+			requiredbooknumber.setText("Integer only");
+			return;
+		}
+	}
+	
+	void clearJField() {
+		searchbooknumber.setText(null);
+		booknumberchange.setText(null);
+		bookname.setText(null);
+		author.setText(null);
+		requiredbooknumber.setText(null);
 	}
 }

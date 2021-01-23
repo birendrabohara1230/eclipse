@@ -42,7 +42,7 @@ public class AddBookInformationIntoDatabase extends JFrame {
 					AddBookInformationIntoDatabase frame = new AddBookInformationIntoDatabase();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e.toString());
 				}
 			}
 		});
@@ -53,11 +53,10 @@ public class AddBookInformationIntoDatabase extends JFrame {
 	 */
 	public AddBookInformationIntoDatabase() {
 		setResizable(false);
-		setAlwaysOnTop(true);
 		setTitle("add book information");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
-		setBounds(100, 100, 846, 388);
+		setBounds(350, 90, 869, 479);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

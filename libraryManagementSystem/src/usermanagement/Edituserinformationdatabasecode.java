@@ -3,6 +3,8 @@ package usermanagement;
 import java.sql.Connection;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 import dao.AddUserDetailDataDeclaration;
 import databaseConnection.DatabaseConnection;
 
@@ -17,13 +19,13 @@ public class Edituserinformationdatabasecode {
 				st.execute(sql);
 				return true;
 			} catch (Exception e) {
-				// TODO: handle exception
+				JOptionPane.showConfirmDialog(null, e.toString());
 			}
 			finally {
 				try {
 					st.close();
 				} catch (Exception e2) {
-					// TODO: handle exception
+					JOptionPane.showConfirmDialog(null, e2.toString());
 				}
 			}
 			return false;

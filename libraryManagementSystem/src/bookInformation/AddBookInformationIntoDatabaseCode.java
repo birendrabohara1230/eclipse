@@ -18,9 +18,8 @@ public class AddBookInformationIntoDatabaseCode {
 			st.execute(query);
 			return true;
 		} catch (Exception e) {
-			JOptionPane.showConfirmDialog(null, e);
-		}
-		
+			JOptionPane.showConfirmDialog(null, e.toString());
+		}		
 		return false;
 	}
 	

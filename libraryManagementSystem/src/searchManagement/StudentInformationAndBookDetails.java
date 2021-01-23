@@ -9,6 +9,8 @@ import javax.swing.border.EmptyBorder;
 import bookInformation.AddBookInformationIntoDatabase;
 import bookInformation.AddBookInformationIntoDatabaseCode;
 import bookInformation.BookInformation;
+import bookInformation.DeleteBookInformation;
+import bookInformation.ShowAllBook;
 import bookandstudentinformation.StudentandBookNumber;
 import dao.StudentInformation;
 import database.AddStudentInformationIntoDatabase;
@@ -83,10 +85,6 @@ public class StudentInformationAndBookDetails extends JFrame {
 	private JPanel contentPane;
 	private JMenu mnNewMenu;
 	private JMenuItem mntmNewMenuItem;
-	private JMenu mnNewMenu_1;
-	private JMenuItem mntmNewMenuItem_1;
-	private JMenu mnNewMenu_2;
-	private JMenuItem mntmNewMenuItem_2;
 	private JMenu mnNewMenu_3;
 	private JMenuItem mntmNewMenuItem_4;
 	private JMenu mnNewMenu_4;
@@ -201,9 +199,28 @@ public class StudentInformationAndBookDetails extends JFrame {
 	private JLabel lblNewLabel_33;
 	private JLabel studentname;
 	private JLabel studentfullname;
-	private JLabel nostudentid;
+	private JLabel requiredstudentid;
 	private JComboBox showallbookselect;
-	private JMenuItem mntmNewMenuItem_14;
+	private JLabel requiredaddbooknumber;
+	private JLabel requiredaddbookname;
+	private JLabel requiredaddbookauthor;
+	private JLabel requiredaddstudentid;
+	private JLabel requiredaddstudentfirstname;
+	private JLabel requiredaddstudentlastname;
+	private JLabel requiredaddstudentfathername;
+	private JLabel requiredaddstudentmothername;
+	private JLabel requiredaddstudentaddress;
+	private JLabel requiredaddstudentdob;
+	private JLabel lblNewLabel_34;
+	private JLabel lblNewLabel_35;
+	private JLabel lblNewLabel_36;
+	private JLabel lblNewLabel_37;
+	private JLabel lblNewLabel_38;
+	private JLabel lblNewLabel_39;
+	private JLabel lblNewLabel_40;
+	private JLabel lblNewLabel_41;
+	private JLabel lblNewLabel_42;
+	private JLabel requirededitbookbooknumber;
 
 
 	/**
@@ -216,7 +233,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 					StudentInformationAndBookDetails frame = new StudentInformationAndBookDetails();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e.toString());
 				}
 			}
 		});
@@ -255,8 +272,10 @@ public class StudentInformationAndBookDetails extends JFrame {
 		/*
 		 * it fits the opening Jframe just to fit the screen of the given device.
 		 */
+		setDefaultLookAndFeelDecorated(true);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);	
 		setBounds(128, 50, 1230, 720);
+	
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -266,6 +285,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		mntmNewMenuItem = new JMenuItem("Add  student information");
+		mntmNewMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
 		mntmNewMenuItem.setHorizontalAlignment(SwingConstants.LEFT);
 		mntmNewMenuItem.setArmed(true);
 		mntmNewMenuItem.setBackground(new Color(240, 240, 240));
@@ -283,6 +303,9 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem);
 		
 		mntmNewMenuItem_10 = new JMenuItem("Edit student information");
+		mntmNewMenuItem_10.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK));
+		Image edits = new ImageIcon(this.getClass().getResource("/edit.png")).getImage();
+		mntmNewMenuItem_10.setIcon(new ImageIcon(edits));
 		mntmNewMenuItem_10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -294,6 +317,9 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_10);
 		
 		mntmNewMenuItem_11 = new JMenuItem("Delete student information");
+		mntmNewMenuItem_11.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK));
+		Image deletes = new ImageIcon(this.getClass().getResource("/delete.png")).getImage();
+		mntmNewMenuItem_11.setIcon(new ImageIcon(deletes));
 		mntmNewMenuItem_11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DeleteStudentInformationFromDatabase deletestudent = new DeleteStudentInformationFromDatabase();
@@ -304,6 +330,9 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_11);
 		
 		mntmNewMenuItem_12 = new JMenuItem("Show all student");
+		mntmNewMenuItem_12.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.ALT_MASK | InputEvent.SHIFT_MASK));
+		Image all = new ImageIcon(this.getClass().getResource("/all.png")).getImage();
+		mntmNewMenuItem_12.setIcon(new ImageIcon(all));
 		mntmNewMenuItem_12.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ShowAllStudentInformation information = new ShowAllStudentInformation();
@@ -314,88 +343,19 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mntmNewMenuItem_12.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnNewMenu.add(mntmNewMenuItem_12);
 		
-		mnNewMenu_1 = new JMenu("Edit");
-		mnNewMenu_1.setHorizontalAlignment(SwingConstants.LEFT);
-		mnNewMenu_1.setHorizontalTextPosition(SwingConstants.LEFT);
-		mnNewMenu_1.setAlignmentX(Component.LEFT_ALIGNMENT);
-		mnNewMenu_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		menuBar.add(mnNewMenu_1);
-		
-		mntmNewMenuItem_1 = new JMenuItem("Edit student information");
-		mntmNewMenuItem_1.setArmed(true);
-		mntmNewMenuItem_1.setHorizontalAlignment(SwingConstants.LEFT);
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EditStudentInformation edit = new EditStudentInformation();
-				edit.setVisible(true);
-			}
-		});
-		mntmNewMenuItem_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnNewMenu_1.add(mntmNewMenuItem_1);
-		
-		mntmNewMenuItem_14 = new JMenuItem("Edit user information");
-		mntmNewMenuItem_14.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Edituserinformation edituser = new Edituserinformation();
-				edituser.setVisible(true);
-			}
-		});
-		mntmNewMenuItem_14.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnNewMenu_1.add(mntmNewMenuItem_14);
-		
-		JMenuItem mntmNewMenuItem_15 = new JMenuItem("Edit book information");
-		mntmNewMenuItem_15.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EditBookInformation editbook = new EditBookInformation();
-				editbook.setVisible(true);
-			}
-		});
-		mntmNewMenuItem_15.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnNewMenu_1.add(mntmNewMenuItem_15);
-		
-		mnNewMenu_2 = new JMenu("Delete");
-		mnNewMenu_2.setAlignmentX(Component.LEFT_ALIGNMENT);
-		mnNewMenu_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		menuBar.add(mnNewMenu_2);
-		
-		mntmNewMenuItem_2 = new JMenuItem("Delete student information");
-		mntmNewMenuItem_2.setArmed(true);
-		mntmNewMenuItem_2.setHorizontalAlignment(SwingConstants.LEFT);
-		mntmNewMenuItem_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DeleteStudentInformationFromDatabase delete  = new DeleteStudentInformationFromDatabase();
-				delete.setVisible(true);
-			}
-		});
-		mntmNewMenuItem_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnNewMenu_2.add(mntmNewMenuItem_2);
-		
-		JMenuItem mntmNewMenuItem_16 = new JMenuItem("Delete user information");
-		mntmNewMenuItem_16.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Deleteuserinformation deleteuser = new Deleteuserinformation();
-				deleteuser.setVisible(true);
-			}
-		});
-		mntmNewMenuItem_16.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnNewMenu_2.add(mntmNewMenuItem_16);
-		
-		JMenuItem mntmNewMenuItem_17 = new JMenuItem("Delete book information");
-		mntmNewMenuItem_17.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DeleteStudentInformationFromDatabase deletebook = new DeleteStudentInformationFromDatabase();
-				deletebook.setVisible(true);
-			
-			}
-		});
-		mntmNewMenuItem_17.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		mnNewMenu_2.add(mntmNewMenuItem_17);
-		
 		mnNewMenu_3 = new JMenu("User");
 		mnNewMenu_3.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.add(mnNewMenu_3);
 		
 		mntmNewMenuItem_4 = new JMenuItem("Add User Information   ");
+		mntmNewMenuItem_4.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
+		mntmNewMenuItem_4.setHorizontalAlignment(SwingConstants.LEFT);
+		mntmNewMenuItem_4.setArmed(true);
+		mntmNewMenuItem_4.setBackground(new Color(240, 240, 240));
+		mntmNewMenuItem_4.setAlignmentX(Component.LEFT_ALIGNMENT);
+		mntmNewMenuItem_4.setAlignmentY(Component.TOP_ALIGNMENT);
+		Image addusericon = new ImageIcon(this.getClass().getResource("/addes.png")).getImage();
+		mntmNewMenuItem_4.setIcon(new ImageIcon(addusericon));
 		mntmNewMenuItem_4.setArmed(true);
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -407,6 +367,9 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mnNewMenu_3.add(mntmNewMenuItem_4);
 		
 		mntmNewMenuItem_7 = new JMenuItem("Edit user information");
+		mntmNewMenuItem_7.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		Image editusericon = new ImageIcon(this.getClass().getResource("/edit.png")).getImage();
+		mntmNewMenuItem_7.setIcon(new ImageIcon(editusericon));
 		mntmNewMenuItem_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Edituserinformation edituser = new Edituserinformation();
@@ -417,6 +380,9 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mnNewMenu_3.add(mntmNewMenuItem_7);
 		
 		mntmNewMenuItem_8 = new JMenuItem("Delete user information");
+		mntmNewMenuItem_8.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		Image deleteusericon = new ImageIcon(this.getClass().getResource("/delete.png")).getImage();
+		mntmNewMenuItem_8.setIcon(new ImageIcon(deleteusericon));
 		mntmNewMenuItem_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Deleteuserinformation deleteuser = new Deleteuserinformation();
@@ -427,6 +393,10 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mnNewMenu_3.add(mntmNewMenuItem_8);
 		
 		mntmNewMenuItem_9 = new JMenuItem("Show all user");
+		mntmNewMenuItem_9.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		Image showallusericon = new ImageIcon(this.getClass().getResource("/all.png")).getImage();
+		mntmNewMenuItem_9.setIcon(new ImageIcon(showallusericon));
+		mntmNewMenuItem_9.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mntmNewMenuItem_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Showalluser alluser = new Showalluser();
@@ -440,6 +410,15 @@ public class StudentInformationAndBookDetails extends JFrame {
 		menuBar.add(mnNewMenu_4);
 		
 		mntmNewMenuItem_3 = new JMenuItem("Add book information");
+		mntmNewMenuItem_3.setSize(new Dimension(3, 0));
+		mntmNewMenuItem_3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_MASK | InputEvent.ALT_MASK));
+		mntmNewMenuItem_3.setHorizontalAlignment(SwingConstants.LEFT);
+		mntmNewMenuItem_3.setArmed(true);
+		mntmNewMenuItem_3.setBackground(new Color(240, 240, 240));
+		mntmNewMenuItem_3.setAlignmentX(Component.LEFT_ALIGNMENT);
+		mntmNewMenuItem_3.setAlignmentY(Component.TOP_ALIGNMENT);
+		Image addbookicon = new ImageIcon(this.getClass().getResource("/addes.png")).getImage();
+		mntmNewMenuItem_3.setIcon(new ImageIcon(addbookicon));
 		mntmNewMenuItem_3.setArmed(true);
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -451,6 +430,9 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mnNewMenu_4.add(mntmNewMenuItem_3);
 		
 		mntmNewMenuItem_5 = new JMenuItem("Edit book information");
+		mntmNewMenuItem_5.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK));
+		Image editbookicon = new ImageIcon(this.getClass().getResource("/edit.png")).getImage();
+		mntmNewMenuItem_5.setIcon(new ImageIcon(editbookicon));
 		mntmNewMenuItem_5.setArmed(true);
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -462,14 +444,27 @@ public class StudentInformationAndBookDetails extends JFrame {
 		mnNewMenu_4.add(mntmNewMenuItem_5);
 		
 		mntmNewMenuItem_6 = new JMenuItem("Show all book");
+		mntmNewMenuItem_6.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK));
+		Image showallbookicon = new ImageIcon(this.getClass().getResource("/all.png")).getImage();
+		mntmNewMenuItem_6.setIcon(new ImageIcon(showallbookicon));
 		mntmNewMenuItem_6.setArmed(true);
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				switchpanel1(showallbook);
+				ShowAllBook allbook = new ShowAllBook();
+				allbook.setVisible(true);
 			}
 		});
 		
 		mntmNewMenuItem_13 = new JMenuItem("Delete book information");
+		mntmNewMenuItem_13.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK));
+		Image deletebookicon = new ImageIcon(this.getClass().getResource("/delete.png")).getImage();
+		mntmNewMenuItem_13.setIcon(new ImageIcon(deletebookicon));
+		mntmNewMenuItem_13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DeleteBookInformation deletebook = new DeleteBookInformation();
+				deletebook.setVisible(true);
+			}
+		});
 		mntmNewMenuItem_13.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		mnNewMenu_4.add(mntmNewMenuItem_13);
 		mntmNewMenuItem_6.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -596,41 +591,20 @@ public class StudentInformationAndBookDetails extends JFrame {
 		studentid.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				nostudentid.setText(null);
+				requiredstudentid.setText(null);
+				requiredstudentid.setText(null);
 			}
 		});
 		studentid.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				
+				 
+				requiredstudentid.setText(null);
+				studentname.setText(null);
+				studentfullname.setText(null);
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
 				{
-					Statement st = null, stt = null;
-					ResultSet rss =null, rs = null;
-					try {
-						Connection con = DatabaseConnection.getConnection();
-						String sql = "select * from studentinformation where studentid = "+studentid.getText()+"";
-						String query = "select bookinformation.book_number, bookinformation.Book_name, bookinformation.author, bookinformation.Department, studentandbooknumber.Issued_date from bookinformation , studentandbooknumber where bookinformation.Book_number = studentandbooknumber.Book_number and studentandbooknumber.Student_id = "+studentid.getText()+"";
-						st = con.createStatement();
-						rss= st.executeQuery(query);
-						table.setModel(DbUtils.resultSetToTableModel(rss));	
-						stt = con.createStatement();
-						rs = stt.executeQuery(sql);
-						studentname.setText("Name");
-						studentfullname.setText(rs.getString("first_name")+ " "+ rs.getString("last_name"));
-					} catch (Exception e2) {
-						JOptionPane.showConfirmDialog(null, "No data found");
-					}	
-					finally {
-						try {
-							rss.close();
-							st.close();
-							rs.close();
-							stt.close();
-						} catch (Exception e3) {
-							JOptionPane.showConfirmDialog(null, e3.toString());
-						}
-					}
+					showStudentAndBookInformation();
 				}
 				
 			}
@@ -648,7 +622,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (studentid.getText().isEmpty() ) {
-					nostudentid.setText("Please check student information before adding book!");
+					requiredstudentid.setText("Please check student information before adding book!");
 					return;
 				}else {
 					StudentandBookNumber sts = new StudentandBookNumber();
@@ -667,16 +641,16 @@ public class StudentInformationAndBookDetails extends JFrame {
 		studentfullname = new JLabel("");
 		studentfullname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
-		nostudentid = new JLabel("");
-		nostudentid.setForeground(new Color(255, 0, 0));
-		nostudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requiredstudentid = new JLabel("");
+		requiredstudentid.setForeground(Color.BLACK);
+		requiredstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_33_1 = new JLabel("Return book");
 		lblNewLabel_33_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (studentid.getText().isEmpty()) {
-					nostudentid.setText("Please check student information before adding book!");
+					requiredstudentid.setText("Please check student information before adding book!");
 					return;
 				}else {
 					ReturnBook returnbookbystudent = new ReturnBook();
@@ -695,24 +669,20 @@ public class StudentInformationAndBookDetails extends JFrame {
 					.addGap(10)
 					.addGroup(gl_studentandbookinformation.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_studentandbookinformation.createSequentialGroup()
-							.addGroup(gl_studentandbookinformation.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
-								.addComponent(studentname, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE))
+							.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
 							.addGap(2)
-							.addGroup(gl_studentandbookinformation.createParallelGroup(Alignment.LEADING)
-								.addComponent(studentfullname, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
-								.addComponent(studentid, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE))
-							.addGroup(gl_studentandbookinformation.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_studentandbookinformation.createSequentialGroup()
-									.addGap(18)
-									.addComponent(lblNewLabel_33, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(lblNewLabel_33_1, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_studentandbookinformation.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(nostudentid, GroupLayout.PREFERRED_SIZE, 547, GroupLayout.PREFERRED_SIZE)))
-							.addGap(176))
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 1079, Short.MAX_VALUE)))
+							.addComponent(studentid, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
+							.addGap(85)
+							.addComponent(requiredstudentid, GroupLayout.PREFERRED_SIZE, 547, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_studentandbookinformation.createSequentialGroup()
+							.addComponent(studentname, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+							.addGap(29)
+							.addComponent(studentfullname, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(lblNewLabel_33, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(lblNewLabel_33_1, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
+						.addComponent(scrollPane)))
 		);
 		gl_studentandbookinformation.setVerticalGroup(
 			gl_studentandbookinformation.createParallelGroup(Alignment.LEADING)
@@ -721,12 +691,12 @@ public class StudentInformationAndBookDetails extends JFrame {
 					.addGroup(gl_studentandbookinformation.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
 						.addComponent(studentid, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addComponent(nostudentid, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(requiredstudentid, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+					.addGap(6)
 					.addGroup(gl_studentandbookinformation.createParallelGroup(Alignment.LEADING)
 						.addComponent(studentname, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_33, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 						.addComponent(studentfullname, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_33, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel_33_1, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
@@ -740,47 +710,47 @@ public class StudentInformationAndBookDetails extends JFrame {
 		
 		lblNewLabel_4 = new JLabel("Search by student id");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4.setBounds(134, 10, 184, 35);
+		lblNewLabel_4.setBounds(10, 41, 184, 35);
 		deletestudentinformation.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_4_1 = new JLabel("Search by student id");
 		lblNewLabel_4_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4_1.setBounds(134, 114, 184, 35);
+		lblNewLabel_4_1.setBounds(389, 114, 184, 35);
 		deletestudentinformation.add(lblNewLabel_4_1);
 		
 		JLabel lblNewLabel_4_2 = new JLabel("First name");
 		lblNewLabel_4_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4_2.setBounds(134, 159, 184, 35);
+		lblNewLabel_4_2.setBounds(389, 159, 184, 35);
 		deletestudentinformation.add(lblNewLabel_4_2);
 		
 		JLabel lblNewLabel_4_3 = new JLabel("Last name");
 		lblNewLabel_4_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4_3.setBounds(134, 204, 184, 35);
+		lblNewLabel_4_3.setBounds(389, 204, 184, 35);
 		deletestudentinformation.add(lblNewLabel_4_3);
 		
 		JLabel lblNewLabel_4_4 = new JLabel("Father name");
 		lblNewLabel_4_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4_4.setBounds(134, 250, 184, 35);
+		lblNewLabel_4_4.setBounds(389, 249, 184, 35);
 		deletestudentinformation.add(lblNewLabel_4_4);
 		
 		JLabel lblNewLabel_4_5 = new JLabel("Mother name");
 		lblNewLabel_4_5.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4_5.setBounds(134, 294, 184, 35);
+		lblNewLabel_4_5.setBounds(389, 294, 184, 35);
 		deletestudentinformation.add(lblNewLabel_4_5);
 		
 		JLabel lblNewLabel_4_6 = new JLabel("Address");
 		lblNewLabel_4_6.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4_6.setBounds(134, 341, 184, 35);
+		lblNewLabel_4_6.setBounds(389, 340, 184, 35);
 		deletestudentinformation.add(lblNewLabel_4_6);
 		
 		JLabel lblNewLabel_4_7 = new JLabel("Date of birth");
 		lblNewLabel_4_7.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4_7.setBounds(134, 389, 184, 35);
+		lblNewLabel_4_7.setBounds(389, 388, 184, 35);
 		deletestudentinformation.add(lblNewLabel_4_7);
 		
 		JLabel lblNewLabel_4_8 = new JLabel("Department");
 		lblNewLabel_4_8.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4_8.setBounds(134, 434, 184, 35);
+		lblNewLabel_4_8.setBounds(389, 433, 184, 35);
 		deletestudentinformation.add(lblNewLabel_4_8);
 		
 		deletesearchstudentid = new JTextField();
@@ -794,7 +764,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		});
 		deletesearchstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletesearchstudentid.setBorder(null);
-		deletesearchstudentid.setBounds(351, 10, 257, 35);
+		deletesearchstudentid.setBounds(242, 41, 206, 35);
 		deletestudentinformation.add(deletesearchstudentid);
 		deletesearchstudentid.setColumns(10);
 		
@@ -802,46 +772,46 @@ public class StudentInformationAndBookDetails extends JFrame {
 		deletestudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletestudentid.setColumns(10);
 		deletestudentid.setBorder(null);
-		deletestudentid.setBounds(351, 114, 257, 35);
+		deletestudentid.setBounds(606, 114, 257, 35);
 		deletestudentinformation.add(deletestudentid);
 		
 		deletefirstname = new JTextField();
 		deletefirstname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletefirstname.setColumns(10);
 		deletefirstname.setBorder(null);
-		deletefirstname.setBounds(351, 159, 257, 35);
+		deletefirstname.setBounds(606, 159, 257, 35);
 		deletestudentinformation.add(deletefirstname);
 		
 		deletelastname = new JTextField();
 		deletelastname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletelastname.setColumns(10);
 		deletelastname.setBorder(null);
-		deletelastname.setBounds(351, 204, 257, 35);
+		deletelastname.setBounds(606, 204, 257, 35);
 		deletestudentinformation.add(deletelastname);
 		
 		deletefathername = new JTextField();
 		deletefathername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletefathername.setColumns(10);
 		deletefathername.setBorder(null);
-		deletefathername.setBounds(351, 250, 257, 35);
+		deletefathername.setBounds(606, 249, 257, 35);
 		deletestudentinformation.add(deletefathername);
 		
 		deletemothername = new JTextField();
 		deletemothername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletemothername.setColumns(10);
 		deletemothername.setBorder(null);
-		deletemothername.setBounds(351, 294, 257, 35);
+		deletemothername.setBounds(606, 294, 257, 35);
 		deletestudentinformation.add(deletemothername);
 		
 		deleteaddress = new JTextField();
 		deleteaddress.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deleteaddress.setColumns(10);
 		deleteaddress.setBorder(null);
-		deleteaddress.setBounds(351, 341, 257, 35);
+		deleteaddress.setBounds(606, 340, 257, 35);
 		deletestudentinformation.add(deleteaddress);
 		
 		deletedob = new JDateChooser();
-		deletedob.setBounds(351, 389, 257, 35);
+		deletedob.setBounds(606, 388, 257, 35);
 		deletestudentinformation.add(deletedob);
 		
 		JButton delete = new JButton("Delete");
@@ -853,15 +823,25 @@ public class StudentInformationAndBookDetails extends JFrame {
 		delete.setForeground(new Color(255, 0, 0));
 		delete.setBorder(null);
 		delete.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		delete.setBounds(424, 479, 106, 27);
+		delete.setBounds(679, 478, 106, 27);
 		deletestudentinformation.add(delete);
 		
 		deletedepartment = new JTextField();
 		deletedepartment.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletedepartment.setColumns(10);
 		deletedepartment.setBorder(null);
-		deletedepartment.setBounds(351, 434, 257, 35);
+		deletedepartment.setBounds(606, 433, 257, 35);
 		deletestudentinformation.add(deletedepartment);
+		
+		lblNewLabel_36 = new JLabel("Delete student information");
+		lblNewLabel_36.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_36.setBounds(10, 10, 222, 35);
+		deletestudentinformation.add(lblNewLabel_36);
+		
+		lblNewLabel_37 = new JLabel("Detail of the student");
+		lblNewLabel_37.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_37.setBounds(606, 41, 257, 35);
+		deletestudentinformation.add(lblNewLabel_37);
 		
 		editstudentinformation = new JPanel();
 		layeredPane.add(editstudentinformation, "name_3433140303000");
@@ -869,7 +849,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		
 		lblNewLabel_5 = new JLabel("Search by student id");
 		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_5.setBounds(114, 10, 181, 32);
+		lblNewLabel_5.setBounds(10, 45, 205, 32);
 		editstudentinformation.add(lblNewLabel_5);
 		
 		editsearchstudentid = new JTextField();
@@ -883,100 +863,100 @@ public class StudentInformationAndBookDetails extends JFrame {
 		});
 		editsearchstudentid.setBorder(null);
 		editsearchstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		editsearchstudentid.setBounds(341, 10, 281, 32);
+		editsearchstudentid.setBounds(225, 45, 237, 32);
 		editstudentinformation.add(editsearchstudentid);
 		editsearchstudentid.setColumns(10);
 		
 		lblNewLabel_6 = new JLabel("Student id");
 		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_6.setBounds(150, 117, 181, 32);
+		lblNewLabel_6.setBounds(382, 117, 181, 32);
 		editstudentinformation.add(lblNewLabel_6);
 		
 		lblNewLabel_7 = new JLabel("First name");
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_7.setBounds(150, 159, 181, 32);
+		lblNewLabel_7.setBounds(382, 159, 181, 32);
 		editstudentinformation.add(lblNewLabel_7);
 		
 		lblNewLabel_8 = new JLabel("Last name");
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_8.setBounds(150, 201, 181, 32);
+		lblNewLabel_8.setBounds(382, 201, 181, 32);
 		editstudentinformation.add(lblNewLabel_8);
 		
 		lblNewLabel_9 = new JLabel("Father name");
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_9.setBounds(150, 243, 181, 32);
+		lblNewLabel_9.setBounds(382, 243, 181, 32);
 		editstudentinformation.add(lblNewLabel_9);
 		
 		lblNewLabel_10 = new JLabel("Mother name");
 		lblNewLabel_10.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_10.setBounds(150, 285, 181, 32);
+		lblNewLabel_10.setBounds(382, 285, 181, 32);
 		editstudentinformation.add(lblNewLabel_10);
 		
 		lblNewLabel_11 = new JLabel("Address");
 		lblNewLabel_11.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_11.setBounds(150, 327, 181, 32);
+		lblNewLabel_11.setBounds(382, 327, 181, 32);
 		editstudentinformation.add(lblNewLabel_11);
 		
 		lblNewLabel_12 = new JLabel("DOB");
 		lblNewLabel_12.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_12.setBounds(150, 369, 181, 32);
+		lblNewLabel_12.setBounds(382, 369, 181, 32);
 		editstudentinformation.add(lblNewLabel_12);
 		
 		lblNewLabel_13 = new JLabel("Department");
 		lblNewLabel_13.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_13.setBounds(150, 411, 181, 32);
+		lblNewLabel_13.setBounds(382, 411, 181, 32);
 		editstudentinformation.add(lblNewLabel_13);
 		
 		editstudentid = new JTextField();
 		editstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		editstudentid.setColumns(10);
 		editstudentid.setBorder(null);
-		editstudentid.setBounds(341, 117, 281, 32);
+		editstudentid.setBounds(573, 117, 281, 32);
 		editstudentinformation.add(editstudentid);
 		
 		editfirstname = new JTextField();
 		editfirstname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		editfirstname.setColumns(10);
 		editfirstname.setBorder(null);
-		editfirstname.setBounds(341, 159, 281, 32);
+		editfirstname.setBounds(573, 159, 281, 32);
 		editstudentinformation.add(editfirstname);
 		
 		editlastname = new JTextField();
 		editlastname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		editlastname.setColumns(10);
 		editlastname.setBorder(null);
-		editlastname.setBounds(341, 201, 281, 27);
+		editlastname.setBounds(573, 201, 281, 27);
 		editstudentinformation.add(editlastname);
 		
 		editfathername = new JTextField();
 		editfathername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		editfathername.setColumns(10);
 		editfathername.setBorder(null);
-		editfathername.setBounds(341, 243, 281, 32);
+		editfathername.setBounds(573, 243, 281, 32);
 		editstudentinformation.add(editfathername);
 		
 		editmothername = new JTextField();
 		editmothername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		editmothername.setColumns(10);
 		editmothername.setBorder(null);
-		editmothername.setBounds(341, 285, 281, 27);
+		editmothername.setBounds(573, 285, 281, 27);
 		editstudentinformation.add(editmothername);
 		
 		editaddress = new JTextField();
 		editaddress.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		editaddress.setColumns(10);
 		editaddress.setBorder(null);
-		editaddress.setBounds(341, 327, 281, 27);
+		editaddress.setBounds(573, 327, 281, 27);
 		editstudentinformation.add(editaddress);
 		
 		editdob = new JDateChooser();
-		editdob.setBounds(341, 369, 281, 32);
+		editdob.setBounds(573, 369, 281, 32);
 		editstudentinformation.add(editdob);
 		
 		editdepartment = new JComboBox();
 		editdepartment.setModel(new DefaultComboBoxModel(new String[] {"Science and technology", "Education", "Engineering"}));
 		editdepartment.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		editdepartment.setBounds(341, 414, 281, 32);
+		editdepartment.setBounds(573, 414, 281, 32);
 		editstudentinformation.add(editdepartment);
 		
 		JButton edit = new JButton("Edit");
@@ -987,73 +967,148 @@ public class StudentInformationAndBookDetails extends JFrame {
 		});
 		edit.setBorder(null);
 		edit.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		edit.setBounds(438, 456, 91, 32);
+		edit.setBounds(670, 456, 91, 32);
 		editstudentinformation.add(edit);
+		
+		lblNewLabel_35 = new JLabel("Edit student information");
+		lblNewLabel_35.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_35.setBounds(10, 10, 235, 27);
+		editstudentinformation.add(lblNewLabel_35);
+		
+		lblNewLabel_38 = new JLabel("Detail of the student");
+		lblNewLabel_38.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_38.setBounds(574, 45, 235, 32);
+		editstudentinformation.add(lblNewLabel_38);
 		
 		addstudentinformation = new JPanel();
 		layeredPane.add(addstudentinformation, "name_3436503250400");
 		
 		JLabel lblNewLabel_3 = new JLabel("Student id");
+		lblNewLabel_3.setBounds(372, 106, 89, 26);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		addstudentid = new JTextField();
+		addstudentid.setBounds(515, 106, 225, 26);
+		addstudentid.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setEmptyJfieldOfAddStudentInformation();
+			}
+		});
 		addstudentid.setBorder(null);
 		addstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		addstudentid.setColumns(10);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("First name");
+		lblNewLabel_3_1.setBounds(372, 142, 89, 26);
 		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_2 = new JLabel("Last name");
+		lblNewLabel_3_2.setBounds(372, 176, 89, 26);
 		lblNewLabel_3_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_3 = new JLabel("Father name");
+		lblNewLabel_3_3.setBounds(372, 208, 119, 26);
 		lblNewLabel_3_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_4 = new JLabel("Mother name");
+		lblNewLabel_3_4.setBounds(372, 243, 119, 26);
 		lblNewLabel_3_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_5 = new JLabel("Address");
+		lblNewLabel_3_5.setBounds(372, 279, 89, 26);
 		lblNewLabel_3_5.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_5_1 = new JLabel("DOB");
+		lblNewLabel_3_5_1.setBounds(372, 315, 89, 26);
 		lblNewLabel_3_5_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_5_2 = new JLabel("Department");
+		lblNewLabel_3_5_2.setBounds(372, 351, 102, 26);
 		lblNewLabel_3_5_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		addfirstname = new JTextField();
+		addfirstname.setBounds(515, 142, 225, 26);
+		addfirstname.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setEmptyJfieldOfAddStudentInformation();
+			}
+		});
 		addfirstname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		addfirstname.setColumns(10);
 		addfirstname.setBorder(null);
 		
 		addlastname = new JTextField();
+		addlastname.setBounds(515, 176, 225, 26);
+		addlastname.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setEmptyJfieldOfAddStudentInformation();
+			}
+		});
 		addlastname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		addlastname.setColumns(10);
 		addlastname.setBorder(null);
 		
 		addfathername = new JTextField();
+		addfathername.setBounds(515, 208, 225, 26);
+		addfathername.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setEmptyJfieldOfAddStudentInformation();
+			}
+		});
 		addfathername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		addfathername.setColumns(10);
 		addfathername.setBorder(null);
 		
 		addmothername = new JTextField();
+		addmothername.setBounds(515, 243, 225, 26);
+		addmothername.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setEmptyJfieldOfAddStudentInformation();
+			}
+		});
 		addmothername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		addmothername.setColumns(10);
 		addmothername.setBorder(null);
 		
 		addaddress = new JTextField();
+		addaddress.setBounds(515, 279, 225, 26);
+		addaddress.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setEmptyJfieldOfAddStudentInformation();
+			}
+		});
 		addaddress.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		addaddress.setColumns(10);
 		addaddress.setBorder(null);
 		
 		adddob = new JDateChooser();
+		adddob.setBounds(515, 315, 225, 26);
+		adddob.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setEmptyJfieldOfAddStudentInformation();
+			}
+		});
 		
 		adddepartment = new JComboBox();
+		adddepartment.setBounds(515, 351, 225, 26);
+		adddepartment.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setEmptyJfieldOfAddStudentInformation();
+			}
+		});
 		adddepartment.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		adddepartment.setModel(new DefaultComboBoxModel(new String[] {"Science and technology", "Education", "Engineering"}));
 		
 		JButton add = new JButton("Add");
+		add.setBounds(582, 398, 89, 32);
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
 				addstudentinformationintodatabase();
@@ -1061,92 +1116,64 @@ public class StudentInformationAndBookDetails extends JFrame {
 		});
 		add.setBorder(null);
 		add.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		GroupLayout gl_addstudentinformation = new GroupLayout(addstudentinformation);
-		gl_addstudentinformation.setHorizontalGroup(
-			gl_addstudentinformation.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_addstudentinformation.createSequentialGroup()
-					.addGap(120)
-					.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-					.addGap(54)
-					.addComponent(addstudentid, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_addstudentinformation.createSequentialGroup()
-					.addGap(120)
-					.addComponent(lblNewLabel_3_1, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-					.addGap(54)
-					.addComponent(addfirstname, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_addstudentinformation.createSequentialGroup()
-					.addGap(120)
-					.addComponent(lblNewLabel_3_2, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-					.addGap(54)
-					.addComponent(addlastname, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_addstudentinformation.createSequentialGroup()
-					.addGap(120)
-					.addComponent(lblNewLabel_3_3, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
-					.addGap(24)
-					.addComponent(addfathername, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_addstudentinformation.createSequentialGroup()
-					.addGap(120)
-					.addComponent(lblNewLabel_3_4, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
-					.addGap(24)
-					.addComponent(addmothername, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_addstudentinformation.createSequentialGroup()
-					.addGap(120)
-					.addComponent(lblNewLabel_3_5, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-					.addGap(54)
-					.addComponent(addaddress, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_addstudentinformation.createSequentialGroup()
-					.addGap(120)
-					.addComponent(lblNewLabel_3_5_1, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE)
-					.addGap(54)
-					.addComponent(adddob, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_addstudentinformation.createSequentialGroup()
-					.addGap(120)
-					.addComponent(lblNewLabel_3_5_2, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-					.addGap(41)
-					.addComponent(adddepartment, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_addstudentinformation.createSequentialGroup()
-					.addGap(330)
-					.addComponent(add, GroupLayout.PREFERRED_SIZE, 89, GroupLayout.PREFERRED_SIZE))
-		);
-		gl_addstudentinformation.setVerticalGroup(
-			gl_addstudentinformation.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_addstudentinformation.createSequentialGroup()
-					.addGap(106)
-					.addGroup(gl_addstudentinformation.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addComponent(addstudentid, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-					.addGap(10)
-					.addGroup(gl_addstudentinformation.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_3_1, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addComponent(addfirstname, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-					.addGap(8)
-					.addGroup(gl_addstudentinformation.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_3_2, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addComponent(addlastname, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-					.addGap(6)
-					.addGroup(gl_addstudentinformation.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_3_3, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addComponent(addfathername, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-					.addGap(9)
-					.addGroup(gl_addstudentinformation.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_3_4, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addComponent(addmothername, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-					.addGap(12)
-					.addGroup(gl_addstudentinformation.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_3_5, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addComponent(addaddress, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-					.addGap(10)
-					.addGroup(gl_addstudentinformation.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_3_5_1, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addComponent(adddob, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-					.addGap(13)
-					.addGroup(gl_addstudentinformation.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_3_5_2, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addComponent(adddepartment, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
-					.addGap(21)
-					.addComponent(add, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
-		);
-		addstudentinformation.setLayout(gl_addstudentinformation);
+		
+		requiredaddstudentid = new JLabel("");
+		requiredaddstudentid.setBounds(506, 106, 234, 26);
+		requiredaddstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		requiredaddstudentfirstname = new JLabel("");
+		requiredaddstudentfirstname.setBounds(506, 142, 234, 26);
+		requiredaddstudentfirstname.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		requiredaddstudentlastname = new JLabel("");
+		requiredaddstudentlastname.setBounds(506, 174, 234, 26);
+		requiredaddstudentlastname.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		requiredaddstudentfathername = new JLabel("");
+		requiredaddstudentfathername.setBounds(506, 206, 234, 26);
+		requiredaddstudentfathername.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		requiredaddstudentmothername = new JLabel("");
+		requiredaddstudentmothername.setBounds(506, 243, 234, 26);
+		requiredaddstudentmothername.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		requiredaddstudentaddress = new JLabel("");
+		requiredaddstudentaddress.setBounds(506, 281, 234, 26);
+		requiredaddstudentaddress.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		requiredaddstudentdob = new JLabel("");
+		requiredaddstudentdob.setBounds(506, 317, 234, 26);
+		requiredaddstudentdob.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		lblNewLabel_34 = new JLabel("Add student information");
+		lblNewLabel_34.setBounds(10, 10, 229, 23);
+		lblNewLabel_34.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		addstudentinformation.setLayout(null);
+		addstudentinformation.add(lblNewLabel_3);
+		addstudentinformation.add(addstudentid);
+		addstudentinformation.add(requiredaddstudentid);
+		addstudentinformation.add(lblNewLabel_3_1);
+		addstudentinformation.add(addfirstname);
+		addstudentinformation.add(requiredaddstudentfirstname);
+		addstudentinformation.add(lblNewLabel_3_2);
+		addstudentinformation.add(addlastname);
+		addstudentinformation.add(requiredaddstudentlastname);
+		addstudentinformation.add(lblNewLabel_3_4);
+		addstudentinformation.add(addmothername);
+		addstudentinformation.add(requiredaddstudentmothername);
+		addstudentinformation.add(lblNewLabel_3_5);
+		addstudentinformation.add(addaddress);
+		addstudentinformation.add(requiredaddstudentaddress);
+		addstudentinformation.add(lblNewLabel_3_5_1);
+		addstudentinformation.add(adddob);
+		addstudentinformation.add(requiredaddstudentdob);
+		addstudentinformation.add(lblNewLabel_3_5_2);
+		addstudentinformation.add(adddepartment);
+		addstudentinformation.add(add);
+		addstudentinformation.add(lblNewLabel_34);
+		addstudentinformation.add(lblNewLabel_3_3);
+		addstudentinformation.add(addfathername);
+		addstudentinformation.add(requiredaddstudentfathername);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -1315,6 +1342,37 @@ public class StudentInformationAndBookDetails extends JFrame {
 		addbookinformation.add(addbookauthor);
 		
 		addbookdepartment = new JComboBox();
+		addbookdepartment.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				if ( e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if ( addbooknumber.getText().isEmpty()) {
+						requiredaddbooknumber.setText("Required");
+						return;
+					}
+					try {
+						Integer.parseInt(addbooknumber.getText());
+					}catch(NumberFormatException ee) {
+						requiredaddbooknumber.setText("Integer only");
+						return;
+					}
+					if ( addbookname.getText().isEmpty() ) {
+						requiredaddbookname.setText("Required");
+						return;
+					}
+					
+					if ( addbookauthor.getText().isEmpty()) {
+						requiredaddbookauthor.setText("Required");
+						return;
+					}
+					
+			      addbookinformation();
+					
+				}
+				
+			}
+		});
 		addbookdepartment.setFont(new Font("Dialog", Font.PLAIN, 18));
 		addbookdepartment.setModel(new DefaultComboBoxModel(new String[] {"Science and technology", "Education", "Engineering"}));
 		addbookdepartment.setBounds(384, 249, 278, 35);
@@ -1323,6 +1381,26 @@ public class StudentInformationAndBookDetails extends JFrame {
 		addbook = new JButton("Add book");
 		addbook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if ( addbooknumber.getText().isEmpty()) {
+					requiredaddbooknumber.setText("Required");
+					return;
+				}
+				try {
+					Integer.parseInt(addbooknumber.getText());
+				}catch(NumberFormatException ee) {
+					requiredaddbooknumber.setText("Integer only");
+					return;
+				}
+				if ( addbookname.getText().isEmpty() ) {
+					requiredaddbookname.setText("Required");
+					return;
+				}
+				
+				if ( addbookauthor.getText().isEmpty()) {
+					requiredaddbookauthor.setText("Required");
+					return;
+				}
 				addbookinformation();		
 			}
 		});
@@ -1336,73 +1414,110 @@ public class StudentInformationAndBookDetails extends JFrame {
 		lblNewLabel_21.setBounds(355, 10, 307, 35);
 		addbookinformation.add(lblNewLabel_21);
 		
+		requiredaddbooknumber = new JLabel("");
+		requiredaddbooknumber.setForeground(Color.RED);
+		requiredaddbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requiredaddbooknumber.setBounds(692, 107, 148, 35);
+		addbookinformation.add(requiredaddbooknumber);
+		
+		requiredaddbookname = new JLabel("");
+		requiredaddbookname.setForeground(Color.RED);
+		requiredaddbookname.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requiredaddbookname.setBounds(692, 152, 148, 35);
+		addbookinformation.add(requiredaddbookname);
+		
+		requiredaddbookauthor = new JLabel("");
+		requiredaddbookauthor.setForeground(Color.RED);
+		requiredaddbookauthor.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requiredaddbookauthor.setBounds(692, 200, 148, 35);
+		addbookinformation.add(requiredaddbookauthor);
+		
 		editbookinformation = new JPanel();
+		editbookinformation.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				requirededitbookbooknumber.setText(null);
+			}
+		});
 		layeredPane_1.add(editbookinformation, "name_11602533324000");
 		editbookinformation.setLayout(null);
 		
 		lblNewLabel_22 = new JLabel("Search by book number");
 		lblNewLabel_22.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_22.setBounds(188, 63, 201, 32);
+		lblNewLabel_22.setBounds(10, 63, 201, 32);
 		editbookinformation.add(lblNewLabel_22);
 		
 		editbooksearchbooknumber = new JTextField();
+		editbooksearchbooknumber.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				requirededitbookbooknumber.setText(null);
+			}
+		});
 		editbooksearchbooknumber.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				searchbookbynumber();
+				requirededitbookbooknumber.setText(null);
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if(editbooksearchbooknumber.getText().isEmpty()) {
+						requirededitbookbooknumber.setText("Required");
+						return;
+					}
+					searchbookbynumber();
+				}
 			}
 		});
 		editbooksearchbooknumber.setBorder(null);
 		editbooksearchbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		editbooksearchbooknumber.setBounds(421, 63, 263, 32);
+		editbooksearchbooknumber.setBounds(243, 63, 263, 32);
 		editbookinformation.add(editbooksearchbooknumber);
 		editbooksearchbooknumber.setColumns(10);
 		
 		lblNewLabel_23 = new JLabel("Book number");
 		lblNewLabel_23.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_23.setBounds(248, 173, 141, 32);
+		lblNewLabel_23.setBounds(441, 140, 141, 32);
 		editbookinformation.add(lblNewLabel_23);
 		
 		lblNewLabel_24 = new JLabel("Book name");
 		lblNewLabel_24.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_24.setBounds(248, 218, 141, 32);
+		lblNewLabel_24.setBounds(441, 185, 141, 32);
 		editbookinformation.add(lblNewLabel_24);
 		
 		lblNewLabel_25 = new JLabel("Author");
 		lblNewLabel_25.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_25.setBounds(248, 261, 141, 32);
+		lblNewLabel_25.setBounds(441, 228, 141, 32);
 		editbookinformation.add(lblNewLabel_25);
 		
 		lblNewLabel_26 = new JLabel("Department");
 		lblNewLabel_26.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_26.setBounds(248, 303, 141, 32);
+		lblNewLabel_26.setBounds(441, 270, 141, 32);
 		editbookinformation.add(lblNewLabel_26);
 		
 		editbookbooknumber = new JTextField();
 		editbookbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		editbookbooknumber.setColumns(10);
 		editbookbooknumber.setBorder(null);
-		editbookbooknumber.setBounds(421, 173, 263, 32);
+		editbookbooknumber.setBounds(614, 140, 263, 32);
 		editbookinformation.add(editbookbooknumber);
 		
 		editbookbookname = new JTextField();
 		editbookbookname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		editbookbookname.setColumns(10);
 		editbookbookname.setBorder(null);
-		editbookbookname.setBounds(421, 218, 263, 32);
+		editbookbookname.setBounds(614, 185, 263, 32);
 		editbookinformation.add(editbookbookname);
 		
 		editbookauthor = new JTextField();
 		editbookauthor.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		editbookauthor.setColumns(10);
 		editbookauthor.setBorder(null);
-		editbookauthor.setBounds(421, 261, 263, 32);
+		editbookauthor.setBounds(614, 228, 263, 32);
 		editbookinformation.add(editbookauthor);
 		
 		editbookdepartment = new JComboBox();
 		editbookdepartment.setModel(new DefaultComboBoxModel(new String[] {"Science and technology", "Education", "Engineering"}));
 		editbookdepartment.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		editbookdepartment.setBounds(421, 303, 263, 32);
+		editbookdepartment.setBounds(614, 270, 263, 32);
 		editbookinformation.add(editbookdepartment);
 		
 		btnNewButton = new JButton("Edit");
@@ -1413,8 +1528,23 @@ public class StudentInformationAndBookDetails extends JFrame {
 		});
 		btnNewButton.setBorder(null);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnNewButton.setBounds(492, 357, 111, 32);
+		btnNewButton.setBounds(688, 312, 111, 32);
 		editbookinformation.add(btnNewButton);
+		
+		lblNewLabel_39 = new JLabel("Edit book information");
+		lblNewLabel_39.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_39.setBounds(10, 10, 220, 32);
+		editbookinformation.add(lblNewLabel_39);
+		
+		lblNewLabel_40 = new JLabel("Detail of book");
+		lblNewLabel_40.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_40.setBounds(614, 63, 220, 32);
+		editbookinformation.add(lblNewLabel_40);
+		
+		requirededitbookbooknumber = new JLabel("");
+		requirededitbookbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requirededitbookbooknumber.setBounds(240, 10, 220, 32);
+		editbookinformation.add(requirededitbookbooknumber);
 		
 		deletebookinformation = new JPanel();
 		layeredPane_1.add(deletebookinformation, "name_11605756966300");
@@ -1422,7 +1552,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		
 		lblNewLabel_27 = new JLabel("Search by book number");
 		lblNewLabel_27.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_27.setBounds(150, 42, 222, 40);
+		lblNewLabel_27.setBounds(10, 61, 222, 40);
 		deletebookinformation.add(lblNewLabel_27);
 		
 		deletebooksearchbooknumber = new JTextField();
@@ -1436,56 +1566,56 @@ public class StudentInformationAndBookDetails extends JFrame {
 		});
 		deletebooksearchbooknumber.setBorder(null);
 		deletebooksearchbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		deletebooksearchbooknumber.setBounds(436, 42, 282, 40);
+		deletebooksearchbooknumber.setBounds(242, 61, 261, 40);
 		deletebookinformation.add(deletebooksearchbooknumber);
 		deletebooksearchbooknumber.setColumns(10);
 		
 		lblNewLabel_28 = new JLabel("Book number");
 		lblNewLabel_28.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_28.setBounds(211, 141, 161, 40);
+		lblNewLabel_28.setBounds(377, 141, 161, 40);
 		deletebookinformation.add(lblNewLabel_28);
 		
 		lblNewLabel_29 = new JLabel("Book name");
 		lblNewLabel_29.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_29.setBounds(211, 191, 126, 40);
+		lblNewLabel_29.setBounds(377, 191, 126, 40);
 		deletebookinformation.add(lblNewLabel_29);
 		
 		lblNewLabel_30 = new JLabel("Author");
 		lblNewLabel_30.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_30.setBounds(211, 241, 83, 40);
+		lblNewLabel_30.setBounds(377, 241, 83, 40);
 		deletebookinformation.add(lblNewLabel_30);
 		
 		lblNewLabel_31 = new JLabel("Department");
 		lblNewLabel_31.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_31.setBounds(211, 291, 126, 40);
+		lblNewLabel_31.setBounds(377, 291, 126, 40);
 		deletebookinformation.add(lblNewLabel_31);
 		
 		deletebookbooknumber = new JTextField();
 		deletebookbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletebookbooknumber.setColumns(10);
 		deletebookbooknumber.setBorder(null);
-		deletebookbooknumber.setBounds(436, 141, 282, 40);
+		deletebookbooknumber.setBounds(602, 141, 282, 40);
 		deletebookinformation.add(deletebookbooknumber);
 		
 		deletebookbookname = new JTextField();
 		deletebookbookname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletebookbookname.setColumns(10);
 		deletebookbookname.setBorder(null);
-		deletebookbookname.setBounds(436, 191, 282, 40);
+		deletebookbookname.setBounds(602, 191, 282, 40);
 		deletebookinformation.add(deletebookbookname);
 		
 		deletebookauthor = new JTextField();
 		deletebookauthor.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletebookauthor.setColumns(10);
 		deletebookauthor.setBorder(null);
-		deletebookauthor.setBounds(436, 241, 282, 40);
+		deletebookauthor.setBounds(602, 241, 282, 40);
 		deletebookinformation.add(deletebookauthor);
 		
 		deletebookdepartment = new JTextField();
 		deletebookdepartment.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletebookdepartment.setColumns(10);
 		deletebookdepartment.setBorder(null);
-		deletebookdepartment.setBounds(436, 291, 282, 40);
+		deletebookdepartment.setBounds(602, 291, 282, 40);
 		deletebookinformation.add(deletebookdepartment);
 		
 		btnNewButton_1 = new JButton("Delete");
@@ -1494,15 +1624,24 @@ public class StudentInformationAndBookDetails extends JFrame {
 				try {
 					deletebookinformationfromdatabase();
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e1.toString());
 				}
 			}
 		});
 		btnNewButton_1.setForeground(new Color(255, 0, 0));
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnNewButton_1.setBounds(537, 341, 103, 33);
+		btnNewButton_1.setBounds(697, 341, 103, 33);
 		deletebookinformation.add(btnNewButton_1);
+		
+		lblNewLabel_41 = new JLabel("Delete book information");
+		lblNewLabel_41.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_41.setBounds(10, 10, 222, 40);
+		deletebookinformation.add(lblNewLabel_41);
+		
+		lblNewLabel_42 = new JLabel("Detail of book");
+		lblNewLabel_42.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_42.setBounds(602, 61, 222, 40);
+		deletebookinformation.add(lblNewLabel_42);
 		
 		showallbook = new JPanel();
 		showallbook.setBackground(new Color(60, 179, 113));
@@ -1618,17 +1757,59 @@ public class StudentInformationAndBookDetails extends JFrame {
 	}
 	
 public void addstudentinformationintodatabase() {
+	
+	    StudentInformation student = new StudentInformation();
+	
+		if (addstudentid.getText().isEmpty()) {
+			requiredaddstudentid.setText("Required");
+			return;
+		}
+		try {
+			Integer.parseInt(addstudentid.getText());
+		} catch (NumberFormatException e) {
+			requiredaddstudentid.setText("Integer Only");
+			return;
+		}
 		
-		StudentInformation student = new StudentInformation();
+		if(addfirstname.getText().isEmpty()) {
+			requiredaddstudentfirstname.setText("Required");
+			return;
+		}
+		
+		if(addlastname.getText().isEmpty()) {
+			requiredaddstudentlastname.setText("Required");
+			return;
+		}
+		if(addfathername.getText().isEmpty()) {
+			requiredaddstudentfathername.setText("Required");
+			return;
+		}
+		if(addmothername.getText().isEmpty()) {
+			requiredaddstudentmothername.setText("Required");
+			return;
+		}
+		if(addaddress.getText().isEmpty()) {
+			requiredaddstudentaddress.setText("Required");
+			return;
+		}
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String date = sdf.format(adddob.getDate());
+			student.setDob(date);
+		} catch (Exception e) {
+			requiredaddstudentdob.setText("Required");
+			return;
+		}
+		
 		student.setStudentid(Integer.parseInt(addstudentid.getText()));
 		student.setFirstname(addfirstname.getText());
 		student.setLastname(addlastname.getText());
 		student.setFathername(addfathername.getText());
 		student.setMothername(addmothername.getText());
 		student.setAddress(addaddress.getText());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String date = sdf.format(adddob.getDate());
-		student.setDob(date);
+		
+		
+		
 		student.setDepartment((String) adddepartment.getSelectedItem());
 		AddStudentInformationIntoDatabase st = new AddStudentInformationIntoDatabase();
 		boolean flag = st.add(student);
@@ -1648,6 +1829,16 @@ public void addstudentinformationintodatabase() {
 		addaddress.setText(null);
 		adddob.setDate(null);		
 	}	
+
+void setEmptyJfieldOfAddStudentInformation() {
+	requiredaddstudentid.setText(null);
+	requiredaddstudentfirstname.setText(null);
+	requiredaddstudentlastname.setText(null);
+	requiredaddstudentfathername.setText(null);
+	requiredaddstudentmothername.setText(null);
+	requiredaddstudentaddress.setText(null);
+	requiredaddstudentdob.setText(null);
+}
 		public void editstudentinformationintodatabase() {
 			 EditStudentInformations editstudent = new EditStudentInformations();
 			 StudentInformation student = new StudentInformation();
@@ -1767,6 +1958,19 @@ public void addstudentinformationintodatabase() {
     	}
    	
      	public void editbookinformation() {
+     		
+     		if (editbooksearchbooknumber.getText().isEmpty()) {
+     			requirededitbookbooknumber.setText("Required");
+     			return;
+     		}
+     		
+     		try {
+     			Integer.parseInt(editbooksearchbooknumber.getText());
+     		}catch(NumberFormatException e) {
+     			requirededitbookbooknumber.setText("Integer only");
+     			return;
+     		}
+     		
     		BookInformation books = new BookInformation();
     		books.setBooknumber(Integer.parseInt(editbooksearchbooknumber.getText()));
     		books.setBooknumberchange(Integer.parseInt(editbookbooknumber.getText()));
@@ -1780,10 +1984,27 @@ public void addstudentinformationintodatabase() {
     		}else {
     			JOptionPane.showConfirmDialog(null, "Update not successfull");
     		}
+    		editbooksearchbooknumber.setText(null);
+    		editbookbooknumber.setText(null);
+    		editbookbookname.setText(null);
+    		editbookauthor.setText(null);
     	}
      	
      	
      	public void searchbookbynumber() {
+     		
+     		if (editbooksearchbooknumber.getText().isEmpty()) {
+     			requirededitbookbooknumber.setText("Required");
+     			return;
+     		}
+     		
+     		try {
+     			Integer.parseInt(editbooksearchbooknumber.getText());
+     		}catch(NumberFormatException e) {
+     			requirededitbookbooknumber.setText("Integer only");
+     			return;
+     		}
+     		
     		Statement st = null;
     		ResultSet rs = null;
     		try {
@@ -1796,14 +2017,15 @@ public void addstudentinformationintodatabase() {
     			editbookbookname.setText(rs.getString(2));
     			editbookauthor.setText(rs.getString(3));
     		} catch (Exception e) {
-    			// TODO: handle exception
+    			requirededitbookbooknumber.setText("No data found");
+    			return;
     		}
     		finally {
     			try {
     				rs.close();
     				st.close();
     			} catch (Exception e2) {
-    				// TODO: handle exception
+    				JOptionPane.showConfirmDialog(null, e2.toString());
     			}
     		}
     	}
@@ -1824,14 +2046,14 @@ public void addstudentinformationintodatabase() {
     			deletebookauthor.setText(rs.getString(3));
     			deletebookdepartment.setText(rs.getString(4));
     		} catch (Exception e) {
-    			// TODO: handle exception
+    			JOptionPane.showConfirmDialog(null, e.toString());
     		}
     		finally {
     			try {
     				rs.close();
     				st.close();
     			} catch (Exception e2) {
-    				// TODO: handle exception
+    				JOptionPane.showConfirmDialog(null, e2.toString());
     			}
     		}
      	}
@@ -1913,4 +2135,43 @@ public void addstudentinformationintodatabase() {
     		}
     		
     	}
+     	
+     	// creating the method to show the data of student and book
+    public 	void showStudentAndBookInformation() {
+    	
+			if( studentid.getText().isEmpty()) {
+				requiredstudentid.setText("Required");
+				return;
+			}
+			
+			Statement st = null, stt = null;
+			ResultSet rss =null, rs = null;
+			try {
+				Connection con = DatabaseConnection.getConnection();
+				String sql = "select * from studentinformation where studentid = "+studentid.getText()+"";
+				String query = "select bookinformation.book_number, bookinformation.Book_name, bookinformation.author, bookinformation.Department, studentandbooknumber.Issued_date from bookinformation , studentandbooknumber where bookinformation.Book_number = studentandbooknumber.Book_number and studentandbooknumber.Student_id = "+studentid.getText()+"";
+				st = con.createStatement();
+				rss= st.executeQuery(query);
+				table.setModel(DbUtils.resultSetToTableModel(rss));
+				stt = con.createStatement();
+				rs = stt.executeQuery(sql);
+				studentname.setText("Name");
+				studentfullname.setText(rs.getString("first_name")+ " "+ rs.getString("last_name"));
+				con.close();
+			} catch (Exception e2) {
+				requiredstudentid.setText("No data found");
+				return;
+			}	
+			finally {
+				try {
+					rss.close();
+					st.close();
+					rs.close();
+					stt.close();
+				} catch (Exception e3) {
+					requiredstudentid.setText("No data found");
+					return;
+				}
+			}
+     	}
 }

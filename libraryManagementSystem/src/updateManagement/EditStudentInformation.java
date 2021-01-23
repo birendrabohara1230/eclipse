@@ -42,6 +42,7 @@ public class EditStudentInformation extends JFrame {
 	private JTextField studentid;
 	private JTextField studentidfirst;
 	private JDateChooser dateofbirth;
+	private JLabel requiredstudentid;
 
 	/**
 	 * Launch the application.
@@ -53,7 +54,7 @@ public class EditStudentInformation extends JFrame {
 					EditStudentInformation frame = new EditStudentInformation();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e.toString());
 				}
 			}
 		});
@@ -63,12 +64,11 @@ public class EditStudentInformation extends JFrame {
 	 * Create the frame.
 	 */
 	public EditStudentInformation() {
-		setAlwaysOnTop(true);
 		setTitle("edit student information");
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(350, 90, 860, 447);
+		setBounds(350, 90, 869, 479);
 		contentPane = new JPanel();
 		contentPane.setOpaque(false);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -160,6 +160,18 @@ public class EditStudentInformation extends JFrame {
 		JButton btnNewButton = new JButton("Edit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				 if (studentid.getText().isEmpty()) {
+				 		requiredstudentid.setText("Required");
+				 		return;
+				 	} 	
+				 	try {
+				 		Integer.parseInt(studentid.getText());
+				 	}catch(NumberFormatException e1) {
+				 		requiredstudentid.setText("Integer only");
+				 		return;
+				 	}
+				 		 
 				 EditStudentInformations editstudent = new EditStudentInformations();
 				 StudentInformation student = new StudentInformation();
 				 student.setStudentid(Integer.parseInt(studentid.getText()));
@@ -226,6 +238,12 @@ public class EditStudentInformation extends JFrame {
 		studentidfirst.setBorder(null);
 		studentidfirst.setBounds(393, 99, 176, 19);
 		contentPane.add(studentidfirst);
+		
+		requiredstudentid = new JLabel("");
+		requiredstudentid.setForeground(Color.RED);
+		requiredstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requiredstudentid.setBounds(610, 37, 219, 22);
+		contentPane.add(requiredstudentid);
 		Image a = new ImageIcon(this.getClass().getResource("/cancel.png")).getImage();
 	}
 	
@@ -234,6 +252,18 @@ public class EditStudentInformation extends JFrame {
 	 */
 	
 	 public void editstudentinformationintodatabase() {
+		  	
+		 if (studentid.getText().isEmpty()) {
+		 		requiredstudentid.setText("Required");
+		 		return;
+		 	} 	
+		 	try {
+		 		Integer.parseInt(studentid.getText());
+		 	}catch(NumberFormatException e) {
+		 		requiredstudentid.setText("Integer only");
+		 		return;
+		 	}
+		 
 		    Statement st = null;
 			ResultSet rs = null;
 		 try {
@@ -241,14 +271,19 @@ public class EditStudentInformation extends JFrame {
 				String query = "select * from studentinformation where studentid = "+Integer.parseInt(studentid.getText())+"";
 			    st = con.createStatement();
 			    rs = st.executeQuery(query);
-				rs.next();
-				studentidfirst.setText(rs.getString("Studentid"));
-				firstname.setText(rs.getString("First_name"));
-				lastname.setText(rs.getString("Last_name"));
-				fathername.setText(rs.getString("Father_name"));
-				mothername.setText(rs.getString("Mother_name"));
-				address.setText(rs.getString("Address"));
-				dateofbirth.setDate(rs.getDate("Date_of_birth"));
+				if (rs.next()) {
+					studentidfirst.setText(rs.getString("Studentid"));
+					firstname.setText(rs.getString("First_name"));
+					lastname.setText(rs.getString("Last_name"));
+					fathername.setText(rs.getString("Father_name"));
+					mothername.setText(rs.getString("Mother_name"));
+					address.setText(rs.getString("Address"));
+					dateofbirth.setDate(rs.getDate("Date_of_birth"));
+				}else {
+					requiredstudentid.setText("No data found");
+					return;
+				}
+				
 			} catch (Exception e2) {
 				JOptionPane.showConfirmDialog(null, e2);
 			}

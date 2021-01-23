@@ -20,12 +20,17 @@ import java.awt.Toolkit;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class StudentandBookNumber extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField studentid;
 	private JTextField booknumber;
+	private JLabel studentid;
+	private JLabel requiredaddbookbooknumber;
 
 	/**
 	 * Launch the application.
@@ -37,7 +42,7 @@ public class StudentandBookNumber extends JFrame {
 					StudentandBookNumber frame = new StudentandBookNumber();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e.toString());
 				}
 			}
 		});
@@ -48,7 +53,6 @@ public class StudentandBookNumber extends JFrame {
 	 */
 	public StudentandBookNumber() {
 		setResizable(false);
-		setAlwaysOnTop(true);
 		setTitle("add book");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
@@ -63,19 +67,33 @@ public class StudentandBookNumber extends JFrame {
 		lblNewLabel.setBounds(70, 52, 112, 26);
 		contentPane.add(lblNewLabel);
 		
-		studentid = new JTextField();
-		studentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		studentid.setBorder(null);
-		studentid.setBounds(217, 52, 191, 26);
-		contentPane.add(studentid);
-		studentid.setColumns(10);
-		
 		JLabel lblBookNumber = new JLabel("Book number");
 		lblBookNumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblBookNumber.setBounds(70, 102, 112, 26);
 		contentPane.add(lblBookNumber);
 		
 		booknumber = new JTextField();
+		booknumber.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				requiredaddbookbooknumber.setText(null);
+			}
+		});
+		booknumber.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				requiredaddbookbooknumber.setText(null);
+				
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if(booknumber.getText().isEmpty()) {
+						requiredaddbookbooknumber.setText("Required");
+						return;
+					}
+					addbook();
+				}
+				
+			}
+		});
 		booknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		booknumber.setColumns(10);
 		booknumber.setBorder(null);
@@ -85,18 +103,35 @@ public class StudentandBookNumber extends JFrame {
 		JButton add = new JButton("Add");
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(booknumber.getText().isEmpty()) {
+					requiredaddbookbooknumber.setText("Required");
+					return;
+				}	
 				addbook();
 			}
 		});
 		add.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		add.setBounds(261, 158, 102, 34);
 		contentPane.add(add);
+		
+		studentid = new JLabel("");
+		studentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		studentid.setBounds(217, 52, 191, 26);
+		contentPane.add(studentid);
+		
+		requiredaddbookbooknumber = new JLabel("");
+		requiredaddbookbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requiredaddbookbooknumber.setBounds(414, 102, 160, 26);
+		contentPane.add(requiredaddbookbooknumber);
 	}
 	public void showingstudentid(StudentInformation show) {
 		studentid.setText(Integer.toString(show.getStudentid()));
 	}
 	
 	public void addbook() {
+		// creating the object of the StudenInformationAndBookDetails
+		StudentInformationAndBookDetails studentandbookinformation = new StudentInformationAndBookDetails();
+		
 		BookInformation book = new BookInformation();
 		StudentInformation student = new StudentInformation();
 		book.setBooknumber(Integer.parseInt(booknumber.getText()));	
@@ -104,6 +139,7 @@ public class StudentandBookNumber extends JFrame {
 		AddBookIntoStudentRecord add = new AddBookIntoStudentRecord();
 		if ( add.addbookintostudentrecord(book, student)) {
 			JOptionPane.showConfirmDialog(null, "Book added successfully");
+			studentandbookinformation.showStudentAndBookInformation();
 		}else {
 			JOptionPane.showConfirmDialog(null, "Book Not added!!");
 		}

@@ -12,6 +12,8 @@ import net.proteanit.sql.DbUtils;
 import searchManagement.StudentInformationAndBookDetails;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.sql.Connection;
@@ -46,7 +48,7 @@ public class ShowAllStudentInformation extends JFrame {
 					ShowAllStudentInformation frame = new ShowAllStudentInformation();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e.toString());
 				}
 			}
 		});
@@ -61,7 +63,7 @@ public class ShowAllStudentInformation extends JFrame {
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
-		setBounds(100, 100, 1211, 686);
+		setBounds(150, 90, 1211, 686);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -92,23 +94,11 @@ public class ShowAllStudentInformation extends JFrame {
 		search.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 152, 1177, 487);
+		scrollPane.setBounds(10, 105, 1177, 534);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
-		
-		JLabel lblNewLabel_1 = new JLabel("Delete");
-		lblNewLabel_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.out.println(getSelectRow());
-			}
-		});
-		lblNewLabel_1.setForeground(Color.RED);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_1.setBounds(785, 113, 157, 28);
-		contentPane.add(lblNewLabel_1);
 		showAllStudent();
 	}
 	
@@ -138,20 +128,20 @@ public class ShowAllStudentInformation extends JFrame {
 			rs = st.executeQuery(sql);
 			table.setModel(DbUtils.resultSetToTableModel(rs));
 		} catch (Exception e) {
-			// TODO: handle exception
+			JOptionPane.showConfirmDialog(null, e.toString());
 		}
 		finally {
 			try {
 				rs.close();
 				st.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
+			JOptionPane.showConfirmDialog(null, e2.toString());
 			}
 		}
 	}
 	
 	int getSelectRow() {
 		return table.getSelectedRow();
-	}
+	}	
 }
   

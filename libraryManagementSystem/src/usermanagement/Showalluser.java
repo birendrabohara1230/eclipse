@@ -45,7 +45,7 @@ public class Showalluser extends JFrame {
 					Showalluser frame = new Showalluser();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e.toString());
 				}
 			}
 		});
@@ -56,11 +56,10 @@ public class Showalluser extends JFrame {
 	 */
 	public Showalluser() {
 		setResizable(false);
-		setAlwaysOnTop(true);
 		setTitle("show all user");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
-		setBounds(100, 100, 1015, 532);
+		setBounds(240, 90, 1015, 532);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -128,14 +127,14 @@ public class Showalluser extends JFrame {
 			table.setModel(DbUtils.resultSetToTableModel(rs));
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			JOptionPane.showConfirmDialog(null, e.toString());
 		}
 		finally {
 			try {
 				rs.close();
 				st.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
+				JOptionPane.showConfirmDialog(null, e2.toString());
 			}
 		}
 	}
@@ -150,14 +149,14 @@ public class Showalluser extends JFrame {
 			rs = st.executeQuery(sql);
 			table.setModel(DbUtils.resultSetToTableModel(rs));
 		} catch (Exception e) {
-			// TODO: handle exception
+			JOptionPane.showConfirmDialog(null, e.toString());
 		}
 		finally {
 			try {
 				rs.close();
 				st.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
+			JOptionPane.showConfirmDialog(null, e2.toString());
 			}
 		}
 	}

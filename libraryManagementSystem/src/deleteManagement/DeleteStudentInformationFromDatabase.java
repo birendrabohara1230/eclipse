@@ -40,6 +40,8 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 	private JTextField deletestudentdob;
 	private JTextField deletestudentdepartment;
 	private JTextField deletestudentaddress;
+	private JLabel requiredstudentid;
+	private JLabel notdeleted;
 
 	/**
 	 * Launch the application.
@@ -51,7 +53,7 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 					DeleteStudentInformationFromDatabase frame = new DeleteStudentInformationFromDatabase();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e.toString());
 				}
 			}
 		});
@@ -61,13 +63,12 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 	 * Create the frame.
 	 */
 	public DeleteStudentInformationFromDatabase() {
-		setAlwaysOnTop(true);
 		setBackground(Color.WHITE);
 		setTitle("delete student information");
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(350, 90, 720, 502);
+		setBounds(350, 90, 869, 479);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -97,7 +98,16 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 		JButton btnNewButton = new JButton("Delete");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				deletestudentinformationfromdatabase();
+				if( deletestudentid.getText().isEmpty()) {
+					requiredstudentid.setText("Required");
+					return;
+				}
+				if(deletestudentinformationfromdatabase()) {
+					JOptionPane.showConfirmDialog(null, "Successfully deleted.");
+				}else {
+					JOptionPane.showConfirmDialog(null, "Not deleted");
+				}
+				setEmptyJField();
 			}
 		});
 		btnNewButton.setForeground(Color.RED);
@@ -188,27 +198,43 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 		deletestudentdepartment.setBorder(null);
 		deletestudentdepartment.setBounds(301, 345, 201, 32);
 		contentPane.add(deletestudentdepartment);
+		
+		requiredstudentid = new JLabel("");
+		requiredstudentid.setForeground(Color.RED);
+		requiredstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requiredstudentid.setBounds(529, 5, 221, 32);
+		contentPane.add(requiredstudentid);
+		
+		notdeleted = new JLabel("");
+		notdeleted.setForeground(Color.RED);
+		notdeleted.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		notdeleted.setBounds(541, 85, 276, 32);
+		contentPane.add(notdeleted);
 	}
 	/*
 	 * create a method deleting the information of student from database studentinformation.db
 	 */
 	
 	
-	public void deletestudentinformationfromdatabase() {
+	public boolean deletestudentinformationfromdatabase() {
+		
 		Statement st = null;
 		try {
 			Connection connection = DatabaseConnection.getConnection();
 			String sql = "delete from studentinformation where studentid = "+deletestudentid.getText()+"";
 			st = connection.createStatement();
 			st.execute(sql);
+			return true;
 		}catch(Exception e) {
-			
+			notdeleted.setText("Deletion is not successfull");
+			return false;
 		}
 		finally {
 			try {
 				st.close();
 			}catch(Exception e) {
-				
+				notdeleted.setText("Deletion is not successfull");
+				return false;
 			}
 		}
 	}
@@ -229,16 +255,26 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 			deletestudentdob.setText(rs.getString(6));
 			deletestudentdepartment.setText(rs.getString(7));
 			} catch (Exception e2) {
-				
+				JOptionPane.showConfirmDialog(null, e2.toString());
 			}
 			finally {
 				try {
 					rs.close();
 					st.close();
 				} catch (Exception e3) {
-					
+					JOptionPane.showConfirmDialog(null, e3.toString());
 				}
 			}
 	}
 	
+	void setEmptyJField() {
+		deletestudentid.setText(null);
+		deletestudentfirstname.setText(null);
+		deletestudentlastname.setText(null);
+		deletestudentfathername.setText(null);
+		deletestudentmothername.setText(null);
+		deletestudentaddress.setText(null);
+		deletestudentdob.setText(null);
+		deletestudentdepartment.setText(null);
+	}
 }

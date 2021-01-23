@@ -44,7 +44,7 @@ public class SelectingAllBooksInDatabase extends JFrame {
 					SelectingAllBooksInDatabase frame = new SelectingAllBooksInDatabase();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					JOptionPane.showConfirmDialog(null, e.toString());
 				}
 			}
 		});
@@ -59,7 +59,7 @@ public class SelectingAllBooksInDatabase extends JFrame {
 		setTitle("show all books");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentInformationAndBookDetails.class.getResource("/library.png")));
-		setBounds(100, 100, 973, 659);
+		setBounds(350, 90, 869, 479);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

@@ -25,7 +25,7 @@ public class AddBookIntoStudentRecord {
 			try {
 				st.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
+				JOptionPane.showConfirmDialog(null, e2.toString());
 			}
 		}	
      	return false;

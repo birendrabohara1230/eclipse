@@ -20,11 +20,13 @@ public class AddUserIntoDatabase {
 			String query = "select * from userlogindata where username = '"+obj.getUserName()+"' ";
 		    st = con.createStatement();
 		    rs = st.executeQuery(query);
-			rs.next();
+			while(rs.next()) {
 				if (obj.getUserName().equals(rs.getString("username")) && obj.getPassword().equals(rs.getString("password")))
 				{
 					return true;
 				}
+			}
+			
 		} catch (SQLException e) {
 			JOptionPane.showConfirmDialog(null, e);
 		}
