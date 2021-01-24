@@ -23,6 +23,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AddBookInformationIntoDatabase extends JFrame {
 
@@ -31,6 +33,9 @@ public class AddBookInformationIntoDatabase extends JFrame {
 	private JTextField bookname;
 	private JTextField author;
 	private JComboBox department;
+	private JLabel requiredaddbookbooknumber;
+	private JLabel requiredaddbookbookname;
+	private JLabel requiredaddbookbookauthor;
 
 	/**
 	 * Launch the application.
@@ -78,6 +83,12 @@ public class AddBookInformationIntoDatabase extends JFrame {
 		contentPane.add(lblAutho);
 		
 		booknumber = new JTextField();
+		booknumber.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setRequiredLableNull();
+			}
+		});
 		booknumber.setBorder(null);
 		booknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		booknumber.setBounds(345, 42, 233, 25);
@@ -85,6 +96,12 @@ public class AddBookInformationIntoDatabase extends JFrame {
 		booknumber.setColumns(10);
 		
 		bookname = new JTextField();
+		bookname.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setRequiredLableNull();
+			}
+		});
 		bookname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		bookname.setColumns(10);
 		bookname.setBorder(null);
@@ -92,6 +109,12 @@ public class AddBookInformationIntoDatabase extends JFrame {
 		contentPane.add(bookname);
 		
 		author = new JTextField();
+		author.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setRequiredLableNull();
+			}
+		});
 		author.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		author.setColumns(10);
 		author.setBorder(null);
@@ -109,9 +132,15 @@ public class AddBookInformationIntoDatabase extends JFrame {
 		contentPane.add(btnNewButton);
 		
 	    department = new JComboBox();
+	    department.addMouseListener(new MouseAdapter() {
+	    	@Override
+	    	public void mouseClicked(MouseEvent e) {
+	    		setRequiredLableNull();
+	    	}
+	    });
 	    department.addKeyListener(new KeyAdapter() {
 	    	@Override
-	    	public void keyPressed(KeyEvent e) { 		
+	    	public void keyPressed(KeyEvent e) { 
 	    		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 	    			addbookinformation();
 	    		}
@@ -130,9 +159,44 @@ public class AddBookInformationIntoDatabase extends JFrame {
 		lblDepartment.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblDepartment.setBounds(210, 147, 126, 25);
 		contentPane.add(lblDepartment);
+		
+		requiredaddbookbooknumber = new JLabel("");
+		requiredaddbookbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requiredaddbookbooknumber.setBounds(600, 42, 166, 25);
+		contentPane.add(requiredaddbookbooknumber);
+		
+		requiredaddbookbookname = new JLabel("");
+		requiredaddbookbookname.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requiredaddbookbookname.setBounds(600, 77, 166, 25);
+		contentPane.add(requiredaddbookbookname);
+		
+		requiredaddbookbookauthor = new JLabel("");
+		requiredaddbookbookauthor.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requiredaddbookbookauthor.setBounds(600, 112, 166, 25);
+		contentPane.add(requiredaddbookbookauthor);
 	}
 	
 	public void addbookinformation() {
+		
+		if(booknumber.getText().isEmpty()) {
+			requiredaddbookbooknumber.setText("Required");
+			return;
+		}
+		try {
+			Integer.parseInt(booknumber.getText());
+		} catch (NumberFormatException e) {
+			requiredaddbookbooknumber.setText("Integer Only");
+			return;
+		}
+		if(bookname.getText().isEmpty()) {
+			requiredaddbookbookname.setText("Required");
+			return;
+		}
+		if(author.getText().isEmpty()) {
+			requiredaddbookbookauthor.setText("Required");
+			return;
+		}
+		
 		BookInformation book = new BookInformation();
 		book.setBooknumber(Integer.parseInt(booknumber.getText()));
 		book.setBookname(bookname.getText());
@@ -141,9 +205,18 @@ public class AddBookInformationIntoDatabase extends JFrame {
 		AddBookInformationIntoDatabaseCode add = new AddBookInformationIntoDatabaseCode();
 		if(add.addbookinformation(book)) {
 			JOptionPane.showConfirmDialog(null, "Book added successfully");
+			booknumber.setText(null);
+			bookname.setText(null);
+			author.setText(null);
 		}else {
 			JOptionPane.showConfirmDialog(null, "Book not added");
 		}		
+	}
+	
+	void setRequiredLableNull() {
+		requiredaddbookbooknumber.setText(null);
+		requiredaddbookbookname.setText(null);
+		requiredaddbookbookauthor.setText(null);
 	}
 	
 }

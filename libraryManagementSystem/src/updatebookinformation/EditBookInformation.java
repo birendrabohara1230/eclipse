@@ -145,10 +145,22 @@ public class EditBookInformation extends JFrame {
 		searchbooknumber.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {				
+				
+				requiredbooknumber.setText(null);
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {	
+					
+					if( searchbooknumber.getText().isEmpty()) {
+						requiredbooknumber.setText("Required");
+						return;
+					}
+					try {
+						Integer.parseInt(searchbooknumber.getText());
+					} catch (NumberFormatException e2) {
+						requiredbooknumber.setText("Integer Only");
+						return;
+					}
 					searchbookbynumber();			
 				}
-				
 			}
 		});
 		searchbooknumber.addActionListener(new ActionListener() {
@@ -165,45 +177,43 @@ public class EditBookInformation extends JFrame {
 		requiredbooknumber = new JLabel("");
 		requiredbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		requiredbooknumber.setForeground(Color.RED);
-		requiredbooknumber.setBounds(589, 40, 233, 27);
+		requiredbooknumber.setBounds(565, 40, 257, 27);
 		contentPane.add(requiredbooknumber);
 	}
 	
 	public void searchbookbynumber() {
-		
-		checkJFieldEmptyOrNot();
 		
 		Statement st = null;
 		ResultSet rs = null;
 		try {
 			Connection connection = DatabaseConnection.getConnection();
 			String sql = " select * from bookinformation where book_number = "+searchbooknumber.getText()+"";
-			st        = connection.createStatement();
+			st    = connection.createStatement();
 			rs = st.executeQuery(sql);
-			if (rs.next()) {
-				booknumberchange.setText(rs.getString(1));
-				bookname.setText(rs.getString(2));
-				author.setText(rs.getString(3));
-			}else {
-				requiredbooknumber.setText("No book found");
-			}
-		
+			booknumberchange.setText(rs.getString(1));
+			bookname.setText(rs.getString(2));
+			author.setText(rs.getString(3));
+			connection.close();
 		} catch (Exception e) {
-			JOptionPane.showConfirmDialog(null, e.toString());
+			requiredbooknumber.setText("No data found");
+			return;
 		}
 		finally {
 			try {
 				rs.close();
 				st.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
+				JOptionPane.showConfirmDialog(null, e2.toString());
 			}
 		}
 	}
 	
 	public void editbookinformation() {
 		
-		checkJFieldEmptyOrNot();
+		if(booknumberchange.getText().isEmpty()) {
+			requiredbooknumber.setText("See details of book before edit");
+			return;
+		}
 		
 		BookInformation books = new BookInformation();
 		books.setBooknumber(Integer.parseInt(searchbooknumber.getText()));
@@ -219,20 +229,6 @@ public class EditBookInformation extends JFrame {
 			JOptionPane.showConfirmDialog(null, "Update not successfull");
 		}
 		clearJField();
-	}
-	
-	void checkJFieldEmptyOrNot() {
-		if(searchbooknumber.getText().isEmpty()) {
-			requiredbooknumber.setText("Required");
-			return;
-		}
-		try {
-			Integer.parseInt(searchbooknumber.getText());
-			
-		}catch(NumberFormatException e) {
-			requiredbooknumber.setText("Integer only");
-			return;
-		}
 	}
 	
 	void clearJField() {

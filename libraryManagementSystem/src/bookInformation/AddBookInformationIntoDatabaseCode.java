@@ -16,6 +16,7 @@ public class AddBookInformationIntoDatabaseCode {
 			String  query = " insert into bookinformation values("+addbook.getBooknumber()+", '"+addbook.getBookname()+"', '"+addbook.getBookauthor()+"', '"+addbook.getDepartment()+"')";
 			st = connection.createStatement();
 			st.execute(query);
+			connection.close();
 			return true;
 		} catch (Exception e) {
 			JOptionPane.showConfirmDialog(null, e.toString());

@@ -17,6 +17,7 @@ public class Edituserinformationdatabasecode {
 						+ "address = '"+edituser.getAddress()+"', username = '"+edituser.getUsername()+"', password = '"+edituser.getPassword()+"', phone = '"+edituser.getPhone()+"' where user_id = "+edituser.getUserid()+" ";
 				st = connection.createStatement();
 				st.execute(sql);
+				connection.close();
 				return true;
 			} catch (Exception e) {
 				JOptionPane.showConfirmDialog(null, e.toString());

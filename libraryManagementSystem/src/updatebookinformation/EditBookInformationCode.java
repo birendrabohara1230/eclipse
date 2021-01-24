@@ -17,6 +17,7 @@ public class EditBookInformationCode {
 			String query = "update bookinformation set book_number = '"+book.getBooknumberchange()+"', book_name = '"+ book.getBookname()+"', author = '"+book.getBookauthor()+"', department = '"+book.getDepartment()+"' where book_number = '"+book.getBooknumber()+"'  ";
 			st = connection.createStatement();
 			st.execute(query);
+			connection.close();
 			return true;
 		} catch (Exception e) {
 			JOptionPane.showConfirmDialog(null, e);

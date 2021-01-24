@@ -40,8 +40,9 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 	private JTextField deletestudentdob;
 	private JTextField deletestudentdepartment;
 	private JTextField deletestudentaddress;
-	private JLabel requiredstudentid;
+	private JLabel requireddeletestudentid;
 	private JLabel notdeleted;
+	private JLabel requireddeletestudentid_1;
 
 	/**
 	 * Launch the application.
@@ -76,7 +77,7 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Student id");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel.setBounds(148, 2, 106, 32);
+		lblNewLabel.setBounds(24, 1, 106, 32);
 		contentPane.add(lblNewLabel);
 		
 		deletestudentid = new JTextField();
@@ -84,14 +85,28 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 		deletestudentid.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
+				requireddeletestudentid.setText(null);
+				requireddeletestudentid_1.setText(null);
+				
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
 				{
+					if(deletestudentid.getText().isEmpty()) {
+						requireddeletestudentid.setText("*Required");
+						return;
+					}
+					try {
+						Integer.parseInt(deletestudentid.getText());
+					}catch(NumberFormatException ee) {
+						requireddeletestudentid.setText("Integer Only");
+						return;
+					}
+					
 					showstudentinformation();
 				}	
 			}
 		});
 		deletestudentid.setBorder(null);
-		deletestudentid.setBounds(301, 6, 201, 32);
+		deletestudentid.setBounds(177, 5, 201, 32);
 		contentPane.add(deletestudentid);
 		deletestudentid.setColumns(10);
 		
@@ -99,7 +114,11 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if( deletestudentid.getText().isEmpty()) {
-					requiredstudentid.setText("Required");
+					requireddeletestudentid.setText("Required");
+					return;
+				}
+				if(deletestudentfirstname.getText().isEmpty()) {
+					requireddeletestudentid_1.setText("See student information before delete");
 					return;
 				}
 				if(deletestudentinformationfromdatabase()) {
@@ -112,104 +131,110 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 		});
 		btnNewButton.setForeground(Color.RED);
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnNewButton.setBounds(348, 401, 121, 32);
+		btnNewButton.setBounds(606, 400, 121, 32);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblFirstName = new JLabel("First name");
 		lblFirstName.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblFirstName.setBounds(148, 85, 106, 32);
+		lblFirstName.setBounds(406, 85, 106, 32);
 		contentPane.add(lblFirstName);
 		
 		JLabel lblLastName = new JLabel("Last name");
 		lblLastName.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblLastName.setBounds(148, 127, 106, 32);
+		lblLastName.setBounds(406, 127, 106, 32);
 		contentPane.add(lblLastName);
 		
 		JLabel lblFatherName = new JLabel("Father name");
 		lblFatherName.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblFatherName.setBounds(148, 168, 106, 32);
+		lblFatherName.setBounds(406, 168, 106, 32);
 		contentPane.add(lblFatherName);
 		
 		JLabel lblMotherName = new JLabel("Mother name");
 		lblMotherName.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblMotherName.setBounds(148, 210, 121, 32);
+		lblMotherName.setBounds(406, 210, 121, 32);
 		contentPane.add(lblMotherName);
 		
 		JLabel lblAddress = new JLabel("Address");
 		lblAddress.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblAddress.setBounds(148, 258, 106, 32);
+		lblAddress.setBounds(406, 257, 106, 32);
 		contentPane.add(lblAddress);
 		
 		JLabel lblDob = new JLabel("DOB");
 		lblDob.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDob.setBounds(148, 302, 106, 32);
+		lblDob.setBounds(406, 301, 106, 32);
 		contentPane.add(lblDob);
 		
 		JLabel lblDepartment = new JLabel("Department");
 		lblDepartment.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDepartment.setBounds(148, 345, 106, 32);
+		lblDepartment.setBounds(406, 344, 106, 32);
 		contentPane.add(lblDepartment);
 		
 		deletestudentfirstname = new JTextField();
 		deletestudentfirstname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletestudentfirstname.setColumns(10);
 		deletestudentfirstname.setBorder(null);
-		deletestudentfirstname.setBounds(301, 85, 201, 32);
+		deletestudentfirstname.setBounds(559, 85, 201, 32);
 		contentPane.add(deletestudentfirstname);
 		
 		deletestudentlastname = new JTextField();
 		deletestudentlastname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletestudentlastname.setColumns(10);
 		deletestudentlastname.setBorder(null);
-		deletestudentlastname.setBounds(301, 127, 201, 32);
+		deletestudentlastname.setBounds(559, 127, 201, 32);
 		contentPane.add(deletestudentlastname);
 		
 		deletestudentfathername = new JTextField();
 		deletestudentfathername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletestudentfathername.setColumns(10);
 		deletestudentfathername.setBorder(null);
-		deletestudentfathername.setBounds(301, 168, 201, 32);
+		deletestudentfathername.setBounds(559, 168, 201, 32);
 		contentPane.add(deletestudentfathername);
 		
 		deletestudentmothername = new JTextField();
 		deletestudentmothername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletestudentmothername.setColumns(10);
 		deletestudentmothername.setBorder(null);
-		deletestudentmothername.setBounds(301, 214, 201, 32);
+		deletestudentmothername.setBounds(559, 214, 201, 32);
 		contentPane.add(deletestudentmothername);
 		
 		deletestudentaddress = new JTextField();
 		deletestudentaddress.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletestudentaddress.setColumns(10);
 		deletestudentaddress.setBorder(null);
-		deletestudentaddress.setBounds(301, 258, 201, 32);
+		deletestudentaddress.setBounds(559, 257, 201, 32);
 		contentPane.add(deletestudentaddress);
 		
 		deletestudentdob = new JTextField();
 		deletestudentdob.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletestudentdob.setColumns(10);
 		deletestudentdob.setBorder(null);
-		deletestudentdob.setBounds(301, 302, 201, 32);
+		deletestudentdob.setBounds(559, 301, 201, 32);
 		contentPane.add(deletestudentdob);
 		
 		deletestudentdepartment = new JTextField();
 		deletestudentdepartment.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletestudentdepartment.setColumns(10);
 		deletestudentdepartment.setBorder(null);
-		deletestudentdepartment.setBounds(301, 345, 201, 32);
+		deletestudentdepartment.setBounds(559, 344, 201, 32);
 		contentPane.add(deletestudentdepartment);
 		
-		requiredstudentid = new JLabel("");
-		requiredstudentid.setForeground(Color.RED);
-		requiredstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		requiredstudentid.setBounds(529, 5, 221, 32);
-		contentPane.add(requiredstudentid);
+		requireddeletestudentid = new JLabel("");
+		requireddeletestudentid.setForeground(Color.RED);
+		requireddeletestudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requireddeletestudentid.setBounds(406, 5, 221, 32);
+		contentPane.add(requireddeletestudentid);
 		
 		notdeleted = new JLabel("");
 		notdeleted.setForeground(Color.RED);
 		notdeleted.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		notdeleted.setBounds(541, 85, 276, 32);
 		contentPane.add(notdeleted);
+		
+		requireddeletestudentid_1 = new JLabel("");
+		requireddeletestudentid_1.setForeground(Color.RED);
+		requireddeletestudentid_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requireddeletestudentid_1.setBounds(24, 85, 354, 32);
+		contentPane.add(requireddeletestudentid_1);
 	}
 	/*
 	 * create a method deleting the information of student from database studentinformation.db
@@ -254,8 +279,10 @@ public class DeleteStudentInformationFromDatabase extends JFrame {
 			deletestudentaddress.setText(rs.getString(5));
 			deletestudentdob.setText(rs.getString(6));
 			deletestudentdepartment.setText(rs.getString(7));
+			connection.close();
 			} catch (Exception e2) {
-				JOptionPane.showConfirmDialog(null, e2.toString());
+				requireddeletestudentid_1.setText("No data found");
+				return;
 			}
 			finally {
 				try {

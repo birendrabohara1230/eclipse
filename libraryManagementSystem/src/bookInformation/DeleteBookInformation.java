@@ -37,6 +37,8 @@ public class DeleteBookInformation extends JFrame {
 	private JTextField bookauthor;
 	private JTextField department;
 	private JTextField booknumber;
+	private JLabel requireddeletebooknumber;
+	private JLabel requireddeletebooknumber_1;
 
 	/**
 	 * Launch the application.
@@ -70,59 +72,72 @@ public class DeleteBookInformation extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("Book Number");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel.setBounds(172, 46, 161, 33);
+		lblNewLabel.setBounds(23, 46, 161, 33);
 		contentPane.add(lblNewLabel);
 		
 		searchbooknumber = new JTextField();
 		searchbooknumber.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
+				requireddeletebooknumber.setText(null);
+				requireddeletebooknumber_1.setText(null);
 				
 				if (e.getKeyCode() == KeyEvent.VK_ENTER){
+					if(searchbooknumber.getText().isEmpty()) {
+						requireddeletebooknumber.setText("Required");
+						return;
+					}
+					try {
+						Integer.parseInt(searchbooknumber.getText());
+					} catch (NumberFormatException e2) {
+						requireddeletebooknumber.setText("Integer Only");
+						return;
+					}
+					 
 					deletebook();
 				}	
 			}
 		});
 		searchbooknumber.setBorder(null);
 		searchbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		searchbooknumber.setBounds(364, 46, 253, 33);
+		searchbooknumber.setBounds(215, 46, 253, 33);
 		contentPane.add(searchbooknumber);
 		searchbooknumber.setColumns(10);
 		
 		JLabel lblBookName = new JLabel("Book Name");
 		lblBookName.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblBookName.setBounds(172, 185, 161, 33);
+		lblBookName.setBounds(355, 196, 161, 33);
 		contentPane.add(lblBookName);
 		
 		bookname = new JTextField();
 		bookname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		bookname.setColumns(10);
 		bookname.setBorder(null);
-		bookname.setBounds(364, 185, 253, 33);
+		bookname.setBounds(547, 196, 253, 33);
 		contentPane.add(bookname);
 		
 		bookauthor = new JTextField();
 		bookauthor.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		bookauthor.setColumns(10);
 		bookauthor.setBorder(null);
-		bookauthor.setBounds(364, 236, 253, 33);
+		bookauthor.setBounds(547, 247, 253, 33);
 		contentPane.add(bookauthor);
 		
 		JLabel lblAuthor = new JLabel("Author");
 		lblAuthor.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblAuthor.setBounds(172, 236, 161, 33);
+		lblAuthor.setBounds(355, 247, 161, 33);
 		contentPane.add(lblAuthor);
 		
 		JLabel lblDepartment = new JLabel("Department");
 		lblDepartment.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDepartment.setBounds(172, 290, 161, 33);
+		lblDepartment.setBounds(355, 289, 161, 33);
 		contentPane.add(lblDepartment);
 		
 		department = new JTextField();
 		department.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		department.setColumns(10);
 		department.setBorder(null);
-		department.setBounds(364, 290, 253, 33);
+		department.setBounds(547, 289, 253, 33);
 		contentPane.add(department);
 		
 		JLabel lblNewLabel_1 = new JLabel("Delete");
@@ -135,20 +150,30 @@ public class DeleteBookInformation extends JFrame {
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setForeground(Color.RED);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_1.setBounds(448, 351, 108, 33);
+		lblNewLabel_1.setBounds(631, 350, 108, 33);
 		contentPane.add(lblNewLabel_1);
 		
 		booknumber = new JTextField();
 		booknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		booknumber.setColumns(10);
 		booknumber.setBorder(null);
-		booknumber.setBounds(364, 142, 253, 33);
+		booknumber.setBounds(547, 153, 253, 33);
 		contentPane.add(booknumber);
 		
 		JLabel lblNewLabel_2 = new JLabel("Book Number");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_2.setBounds(172, 142, 161, 33);
+		lblNewLabel_2.setBounds(355, 153, 161, 33);
 		contentPane.add(lblNewLabel_2);
+		
+		requireddeletebooknumber = new JLabel("");
+		requireddeletebooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requireddeletebooknumber.setBounds(478, 46, 229, 33);
+		contentPane.add(requireddeletebooknumber);
+		
+		requireddeletebooknumber_1 = new JLabel("");
+		requireddeletebooknumber_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requireddeletebooknumber_1.setBounds(10, 153, 306, 33);
+		contentPane.add(requireddeletebooknumber_1);
 	}
 	public boolean deletebook() {
  		Statement st = null;
@@ -163,21 +188,28 @@ public class DeleteBookInformation extends JFrame {
 		    bookname.setText(rs.getString(2));
 			bookauthor.setText(rs.getString(3));
 		    department.setText(rs.getString(4));
+		    connection.close();
 		    return true;
 		} catch (Exception e) {
-			// TODO: handle exception
+			requireddeletebooknumber_1.setText("No data found");
 		}
 		finally {
 			try {
 				rs.close();
 				st.close();
 			} catch (Exception e2) {
-				// TODO: handle exception
+				JOptionPane.showConfirmDialog(null, e2.toString());
 			}
 		}
 		return false;
  	}
 	void deletebookinformation() {
+		
+		if(bookname.getText().isEmpty()) {
+			requireddeletebooknumber_1.setText("See details of book before delete");
+			return;
+		}
+		
 		BookInformation bookinfo = new BookInformation();
 		bookinfo.setBooknumber(Integer.parseInt(searchbooknumber.getText()));
 		Deletebookinformation deletebook = new Deletebookinformation();

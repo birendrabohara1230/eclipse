@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 import bookInformation.BookInformation;
 import databaseConnection.DatabaseConnection;
 
@@ -15,16 +17,17 @@ public class Deletebookinformation {
 				String sql =  " delete from bookinformation where book_number = "+book.getBooknumber()+" ";
 				st = connection.createStatement();
 				st.execute(sql);
+				connection.close();
 				return true;
 			} catch (Exception e) {
-				// TODO: handle exception
+				JOptionPane.showConfirmDialog(null, e.toString());
 			}
 			finally {
 				try {
 					st.close();
 					connection.close();
 				} catch (Exception e2) {
-					// TODO: handle exception
+					JOptionPane.showConfirmDialog(null, e2.toString());
 				}
 			}
 			return false;
