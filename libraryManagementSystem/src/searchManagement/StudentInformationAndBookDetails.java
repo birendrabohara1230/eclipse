@@ -11,6 +11,7 @@ import bookInformation.AddBookInformationIntoDatabaseCode;
 import bookInformation.BookInformation;
 import bookInformation.DeleteBookInformation;
 import bookInformation.ShowAllBook;
+import bookandstudentinformation.AddBookIntoStudentRecord;
 import bookandstudentinformation.StudentandBookNumber;
 import dao.StudentInformation;
 import database.AddStudentInformationIntoDatabase;
@@ -23,7 +24,9 @@ import informationOfStudents.AddInformationOfStudentsIntoDatabase;
 import informationOfStudents.ShowAllStudentInformation;
 import insertionManagement.AddUserDetailDataIntoDatabase;
 import net.proteanit.sql.DbUtils;
+import returnandhistorymanagement.Historyofstudentandbookinformation;
 import returnandhistorymanagement.ReturnBook;
+import returnandhistorymanagement.Returnbookbystudent;
 import updateManagement.EditStudentInformation;
 import updatebookinformation.EditBookInformation;
 import updatebookinformation.EditBookInformationCode;
@@ -221,6 +224,15 @@ public class StudentInformationAndBookDetails extends JFrame {
 	private JLabel lblNewLabel_41;
 	private JLabel lblNewLabel_42;
 	private JLabel requirededitbookbooknumber;
+	private JTextField addbookbooknumber;
+	private JTextField returnbookbooknumber;
+	private JLabel requirededitstudentid;
+	private JLabel requirededitstudentid_1;
+	private JLabel requireddeletestudentid;
+	private JLabel requireddeletestudentid_1;
+	private JLabel requirededitbookbooknumber_1;
+	private JLabel requireddeletebooknumber;
+	private JLabel requireddeletebooknumber_1;
 
 
 	/**
@@ -621,16 +633,16 @@ public class StudentInformationAndBookDetails extends JFrame {
 		lblNewLabel_33.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (studentid.getText().isEmpty() ) {
-					requiredstudentid.setText("Please check student information before adding book!");
-					return;
-				}else {
-					StudentandBookNumber sts = new StudentandBookNumber();
-					sts.setVisible(true);
-					StudentInformation students = new StudentInformation();
-					students.setStudentid(Integer.parseInt(studentid.getText()));
-					sts.showingstudentid(students);		
-				}
+//				if (studentid.getText().isEmpty() ) {
+//					requiredstudentid.setText("Please check student information before adding book!");
+//					return;
+//				}else {
+//					StudentandBookNumber sts = new StudentandBookNumber();
+//					sts.setVisible(true);
+//					StudentInformation students = new StudentInformation();
+//					students.setStudentid(Integer.parseInt(studentid.getText()));
+//					sts.showingstudentid(students);		
+//				}
 			}
 		});
 		lblNewLabel_33.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -649,19 +661,106 @@ public class StudentInformationAndBookDetails extends JFrame {
 		lblNewLabel_33_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (studentid.getText().isEmpty()) {
-					requiredstudentid.setText("Please check student information before adding book!");
-					return;
-				}else {
-					ReturnBook returnbookbystudent = new ReturnBook();
-					returnbookbystudent.setVisible(true);
-					StudentInformation students = new StudentInformation();
-					students.setStudentid(Integer.parseInt(studentid.getText()));
-					returnbookbystudent.showingstudentid(students);
-				}
+//				if (studentid.getText().isEmpty()) {
+//					requiredstudentid.setText("Please check student information before adding book!");
+//					return;
+//				}else {
+//					ReturnBook returnbookbystudent = new ReturnBook();
+//					returnbookbystudent.setVisible(true);
+//					StudentInformation students = new StudentInformation();
+//					students.setStudentid(Integer.parseInt(studentid.getText()));
+//					returnbookbystudent.showingstudentid(students);
+//				}
 			}
 		});
 		lblNewLabel_33_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		
+		addbookbooknumber = new JTextField();
+		addbookbooknumber.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				requiredstudentid.setText(null);
+			}
+		});
+		addbookbooknumber.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+				requiredstudentid.setText(null);
+				
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					
+					if(studentid.getText().isEmpty()) {
+						requiredstudentid.setText("Please check student information before adding book!");
+						return;
+					}
+					if(addbookbooknumber.getText().isEmpty()) {
+						requiredstudentid.setText("Required book number");
+						return;
+					}
+					AddBookIntoStudentRecord add = new AddBookIntoStudentRecord();
+					BookInformation bookinformation = new BookInformation();
+					StudentInformation studentinformation = new StudentInformation();
+					bookinformation.setBooknumber(Integer.parseInt(addbookbooknumber.getText()));
+					studentinformation.setStudentid(Integer.parseInt(studentid.getText()));
+					if ( add.addbookintostudentrecord(bookinformation, studentinformation)) {
+						JOptionPane.showConfirmDialog(null, "Book added successfully");
+						showStudentAndBookInformation();
+						addbookbooknumber.setText(null);
+					}else {
+						JOptionPane.showConfirmDialog(null, "Book Not added!!");
+						addbookbooknumber.setText(null);
+					}
+				}	
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+//				requiredstudentid.setText(null);
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+//				requiredstudentid.setText(null);
+			}
+		});
+		addbookbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		addbookbooknumber.setColumns(10);
+		
+		returnbookbooknumber = new JTextField();
+		returnbookbooknumber.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				requiredstudentid.setText(null);
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					
+					if(studentid.getText().isEmpty()) {
+						requiredstudentid.setText("Please check student information before adding book!");
+						return;
+					}
+					
+					if(returnbookbooknumber.getText().isEmpty()) {
+						requiredstudentid.setText("Required book number");
+						return;
+					}
+					BookInformation book = new BookInformation();
+					StudentInformation student = new StudentInformation();
+					book.setBooknumber(Integer.parseInt(returnbookbooknumber.getText()));
+					student.setStudentid(Integer.parseInt(studentid.getText()));
+					Historyofstudentandbookinformation historyofstudent = new Historyofstudentandbookinformation();
+					historyofstudent.historyofstudent(student, book);
+					Returnbookbystudent returnbook = new Returnbookbystudent();
+					if (returnbook.returnbook(book)) {
+						JOptionPane.showConfirmDialog(null,"Returned successfully.");
+						showStudentAndBookInformation();
+						returnbookbooknumber.setText(null);
+					}else {
+						JOptionPane.showConfirmDialog(null, "Book not returned.");
+					}
+				}
+				
+			}
+		});
+		returnbookbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		returnbookbooknumber.setColumns(10);
 		GroupLayout gl_studentandbookinformation = new GroupLayout(studentandbookinformation);
 		gl_studentandbookinformation.setHorizontalGroup(
 			gl_studentandbookinformation.createParallelGroup(Alignment.LEADING)
@@ -672,17 +771,20 @@ public class StudentInformationAndBookDetails extends JFrame {
 							.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
 							.addGap(2)
 							.addComponent(studentid, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
-							.addGap(85)
-							.addComponent(requiredstudentid, GroupLayout.PREFERRED_SIZE, 547, GroupLayout.PREFERRED_SIZE))
+							.addGap(167)
+							.addComponent(lblNewLabel_33, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
+							.addGap(87)
+							.addComponent(lblNewLabel_33_1, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_studentandbookinformation.createSequentialGroup()
 							.addComponent(studentname, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
 							.addGap(29)
 							.addComponent(studentfullname, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
-							.addGap(6)
-							.addComponent(lblNewLabel_33, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(lblNewLabel_33_1, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE))
-						.addComponent(scrollPane)))
+							.addGap(48)
+							.addComponent(addbookbooknumber, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE)
+							.addGap(41)
+							.addComponent(returnbookbooknumber, GroupLayout.PREFERRED_SIZE, 161, GroupLayout.PREFERRED_SIZE))
+						.addComponent(requiredstudentid, GroupLayout.PREFERRED_SIZE, 547, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 903, Short.MAX_VALUE)))
 		);
 		gl_studentandbookinformation.setVerticalGroup(
 			gl_studentandbookinformation.createParallelGroup(Alignment.LEADING)
@@ -691,16 +793,29 @@ public class StudentInformationAndBookDetails extends JFrame {
 					.addGroup(gl_studentandbookinformation.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
 						.addComponent(studentid, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addComponent(requiredstudentid, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_studentandbookinformation.createSequentialGroup()
+							.addGap(2)
+							.addComponent(lblNewLabel_33, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_studentandbookinformation.createSequentialGroup()
+							.addGap(2)
+							.addComponent(lblNewLabel_33_1, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)))
 					.addGap(6)
 					.addGroup(gl_studentandbookinformation.createParallelGroup(Alignment.LEADING)
-						.addComponent(studentname, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-						.addComponent(studentfullname, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_33, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_33_1, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
-					.addContainerGap())
+						.addGroup(gl_studentandbookinformation.createSequentialGroup()
+							.addGap(5)
+							.addComponent(studentname, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_studentandbookinformation.createSequentialGroup()
+							.addGap(5)
+							.addComponent(studentfullname, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_studentandbookinformation.createSequentialGroup()
+							.addGap(2)
+							.addComponent(addbookbooknumber, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+						.addComponent(returnbookbooknumber, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addComponent(requiredstudentid, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 467, Short.MAX_VALUE)
+					.addGap(10))
 		);
 		studentandbookinformation.setLayout(gl_studentandbookinformation);
 		
@@ -710,7 +825,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		
 		lblNewLabel_4 = new JLabel("Search by student id");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_4.setBounds(10, 41, 184, 35);
+		lblNewLabel_4.setBounds(10, 54, 184, 35);
 		deletestudentinformation.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_4_1 = new JLabel("Search by student id");
@@ -757,14 +872,27 @@ public class StudentInformationAndBookDetails extends JFrame {
 		deletesearchstudentid.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
+				requireddeletestudentid.setText(null);
+				requireddeletestudentid_1.setText(null);
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if(deletesearchstudentid.getText().isEmpty()) {
+						requireddeletestudentid.setText("Required");
+						return;
+					}
+					
+					try {
+						Integer.parseInt(deletesearchstudentid.getText());
+					}catch(NumberFormatException ee) {
+						requireddeletestudentid.setText("Integer Only");
+						return;
+					}	
 					deletestudentinformation();
 				}
 			}
 		});
 		deletesearchstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		deletesearchstudentid.setBorder(null);
-		deletesearchstudentid.setBounds(242, 41, 206, 35);
+		deletesearchstudentid.setBounds(242, 54, 206, 35);
 		deletestudentinformation.add(deletesearchstudentid);
 		deletesearchstudentid.setColumns(10);
 		
@@ -843,6 +971,16 @@ public class StudentInformationAndBookDetails extends JFrame {
 		lblNewLabel_37.setBounds(606, 41, 257, 35);
 		deletestudentinformation.add(lblNewLabel_37);
 		
+		requireddeletestudentid = new JLabel("");
+		requireddeletestudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requireddeletestudentid.setBounds(242, 10, 222, 35);
+		deletestudentinformation.add(requireddeletestudentid);
+		
+		requireddeletestudentid_1 = new JLabel("");
+		requireddeletestudentid_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requireddeletestudentid_1.setBounds(10, 114, 369, 35);
+		deletestudentinformation.add(requireddeletestudentid_1);
+		
 		editstudentinformation = new JPanel();
 		layeredPane.add(editstudentinformation, "name_3433140303000");
 		editstudentinformation.setLayout(null);
@@ -856,7 +994,21 @@ public class StudentInformationAndBookDetails extends JFrame {
 		editsearchstudentid.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
+				
+				requirededitstudentid.setText(null);
+				requirededitstudentid_1.setText(null);
+				
 				if( e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if(editsearchstudentid.getText().isEmpty()) {
+						requirededitstudentid.setText("Required");
+						return;
+					}
+					try {
+						Integer.parseInt(editsearchstudentid.getText());
+					}catch(NumberFormatException ee) {
+						requirededitstudentid.setText("Integer only");
+						return;
+					}	
 					edidstudentinformation();
 				}
 			}
@@ -972,7 +1124,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		
 		lblNewLabel_35 = new JLabel("Edit student information");
 		lblNewLabel_35.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_35.setBounds(10, 10, 235, 27);
+		lblNewLabel_35.setBounds(10, 10, 205, 27);
 		editstudentinformation.add(lblNewLabel_35);
 		
 		lblNewLabel_38 = new JLabel("Detail of the student");
@@ -980,15 +1132,25 @@ public class StudentInformationAndBookDetails extends JFrame {
 		lblNewLabel_38.setBounds(574, 45, 235, 32);
 		editstudentinformation.add(lblNewLabel_38);
 		
+		requirededitstudentid = new JLabel("");
+		requirededitstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requirededitstudentid.setBounds(225, 8, 237, 27);
+		editstudentinformation.add(requirededitstudentid);
+		
+		requirededitstudentid_1 = new JLabel("");
+		requirededitstudentid_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requirededitstudentid_1.setBounds(10, 117, 340, 27);
+		editstudentinformation.add(requirededitstudentid_1);
+		
 		addstudentinformation = new JPanel();
 		layeredPane.add(addstudentinformation, "name_3436503250400");
 		
 		JLabel lblNewLabel_3 = new JLabel("Student id");
-		lblNewLabel_3.setBounds(372, 106, 89, 26);
+		lblNewLabel_3.setBounds(208, 103, 89, 26);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		addstudentid = new JTextField();
-		addstudentid.setBounds(515, 106, 225, 26);
+		addstudentid.setBounds(351, 103, 225, 26);
 		addstudentid.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -1000,35 +1162,35 @@ public class StudentInformationAndBookDetails extends JFrame {
 		addstudentid.setColumns(10);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("First name");
-		lblNewLabel_3_1.setBounds(372, 142, 89, 26);
+		lblNewLabel_3_1.setBounds(208, 139, 89, 26);
 		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_2 = new JLabel("Last name");
-		lblNewLabel_3_2.setBounds(372, 176, 89, 26);
+		lblNewLabel_3_2.setBounds(208, 173, 89, 26);
 		lblNewLabel_3_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_3 = new JLabel("Father name");
-		lblNewLabel_3_3.setBounds(372, 208, 119, 26);
+		lblNewLabel_3_3.setBounds(208, 209, 119, 26);
 		lblNewLabel_3_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_4 = new JLabel("Mother name");
-		lblNewLabel_3_4.setBounds(372, 243, 119, 26);
+		lblNewLabel_3_4.setBounds(208, 244, 119, 26);
 		lblNewLabel_3_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_5 = new JLabel("Address");
-		lblNewLabel_3_5.setBounds(372, 279, 89, 26);
+		lblNewLabel_3_5.setBounds(208, 275, 89, 26);
 		lblNewLabel_3_5.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_5_1 = new JLabel("DOB");
-		lblNewLabel_3_5_1.setBounds(372, 315, 89, 26);
+		lblNewLabel_3_5_1.setBounds(208, 311, 89, 26);
 		lblNewLabel_3_5_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		JLabel lblNewLabel_3_5_2 = new JLabel("Department");
-		lblNewLabel_3_5_2.setBounds(372, 351, 102, 26);
+		lblNewLabel_3_5_2.setBounds(208, 347, 102, 26);
 		lblNewLabel_3_5_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		addfirstname = new JTextField();
-		addfirstname.setBounds(515, 142, 225, 26);
+		addfirstname.setBounds(351, 139, 225, 26);
 		addfirstname.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -1040,7 +1202,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		addfirstname.setBorder(null);
 		
 		addlastname = new JTextField();
-		addlastname.setBounds(515, 176, 225, 26);
+		addlastname.setBounds(351, 173, 225, 26);
 		addlastname.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -1052,7 +1214,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		addlastname.setBorder(null);
 		
 		addfathername = new JTextField();
-		addfathername.setBounds(515, 208, 225, 26);
+		addfathername.setBounds(351, 209, 225, 26);
 		addfathername.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -1064,7 +1226,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		addfathername.setBorder(null);
 		
 		addmothername = new JTextField();
-		addmothername.setBounds(515, 243, 225, 26);
+		addmothername.setBounds(351, 244, 225, 26);
 		addmothername.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -1076,7 +1238,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		addmothername.setBorder(null);
 		
 		addaddress = new JTextField();
-		addaddress.setBounds(515, 279, 225, 26);
+		addaddress.setBounds(351, 275, 225, 26);
 		addaddress.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -1088,7 +1250,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		addaddress.setBorder(null);
 		
 		adddob = new JDateChooser();
-		adddob.setBounds(515, 315, 225, 26);
+		adddob.setBounds(351, 311, 225, 26);
 		adddob.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -1097,7 +1259,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		});
 		
 		adddepartment = new JComboBox();
-		adddepartment.setBounds(515, 351, 225, 26);
+		adddepartment.setBounds(351, 347, 225, 26);
 		adddepartment.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -1108,7 +1270,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		adddepartment.setModel(new DefaultComboBoxModel(new String[] {"Science and technology", "Education", "Engineering"}));
 		
 		JButton add = new JButton("Add");
-		add.setBounds(582, 398, 89, 32);
+		add.setBounds(418, 394, 89, 32);
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {	
 				addstudentinformationintodatabase();
@@ -1118,31 +1280,31 @@ public class StudentInformationAndBookDetails extends JFrame {
 		add.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		requiredaddstudentid = new JLabel("");
-		requiredaddstudentid.setBounds(506, 106, 234, 26);
+		requiredaddstudentid.setBounds(609, 103, 234, 26);
 		requiredaddstudentid.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		requiredaddstudentfirstname = new JLabel("");
-		requiredaddstudentfirstname.setBounds(506, 142, 234, 26);
+		requiredaddstudentfirstname.setBounds(609, 139, 234, 26);
 		requiredaddstudentfirstname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		requiredaddstudentlastname = new JLabel("");
-		requiredaddstudentlastname.setBounds(506, 174, 234, 26);
+		requiredaddstudentlastname.setBounds(609, 171, 234, 26);
 		requiredaddstudentlastname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		requiredaddstudentfathername = new JLabel("");
-		requiredaddstudentfathername.setBounds(506, 206, 234, 26);
+		requiredaddstudentfathername.setBounds(609, 203, 234, 26);
 		requiredaddstudentfathername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		requiredaddstudentmothername = new JLabel("");
-		requiredaddstudentmothername.setBounds(506, 243, 234, 26);
+		requiredaddstudentmothername.setBounds(609, 240, 234, 26);
 		requiredaddstudentmothername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		requiredaddstudentaddress = new JLabel("");
-		requiredaddstudentaddress.setBounds(506, 281, 234, 26);
+		requiredaddstudentaddress.setBounds(609, 278, 234, 26);
 		requiredaddstudentaddress.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		requiredaddstudentdob = new JLabel("");
-		requiredaddstudentdob.setBounds(506, 317, 234, 26);
+		requiredaddstudentdob.setBounds(609, 314, 234, 26);
 		requiredaddstudentdob.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		
 		lblNewLabel_34 = new JLabel("Add student information");
@@ -1321,6 +1483,12 @@ public class StudentInformationAndBookDetails extends JFrame {
 		addbookinformation.add(lblNewLabel_20);
 		
 		addbooknumber = new JTextField();
+		addbooknumber.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setNullAddBookInformation();
+			}
+		});
 		addbooknumber.setBorder(null);
 		addbooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		addbooknumber.setBounds(384, 104, 278, 35);
@@ -1328,6 +1496,12 @@ public class StudentInformationAndBookDetails extends JFrame {
 		addbooknumber.setColumns(10);
 		
 		addbookname = new JTextField();
+		addbookname.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setNullAddBookInformation();
+			}
+		});
 		addbookname.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		addbookname.setColumns(10);
 		addbookname.setBorder(null);
@@ -1335,6 +1509,12 @@ public class StudentInformationAndBookDetails extends JFrame {
 		addbookinformation.add(addbookname);
 		
 		addbookauthor = new JTextField();
+		addbookauthor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				setNullAddBookInformation();
+			}
+		});
 		addbookauthor.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		addbookauthor.setColumns(10);
 		addbookauthor.setBorder(null);
@@ -1457,6 +1637,7 @@ public class StudentInformationAndBookDetails extends JFrame {
 		editbooksearchbooknumber.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
+				requirededitbookbooknumber_1.setText(null);
 				requirededitbookbooknumber.setText(null);
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if(editbooksearchbooknumber.getText().isEmpty()) {
@@ -1546,6 +1727,11 @@ public class StudentInformationAndBookDetails extends JFrame {
 		requirededitbookbooknumber.setBounds(240, 10, 220, 32);
 		editbookinformation.add(requirededitbookbooknumber);
 		
+		requirededitbookbooknumber_1 = new JLabel("");
+		requirededitbookbooknumber_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requirededitbookbooknumber_1.setBounds(10, 140, 388, 32);
+		editbookinformation.add(requirededitbookbooknumber_1);
+		
 		deletebookinformation = new JPanel();
 		layeredPane_1.add(deletebookinformation, "name_11605756966300");
 		deletebookinformation.setLayout(null);
@@ -1559,7 +1745,21 @@ public class StudentInformationAndBookDetails extends JFrame {
 		deletebooksearchbooknumber.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
+				requireddeletebooknumber.setText(null);
+				requireddeletebooknumber_1.setText(null);	
 				if ( e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if(deletebooksearchbooknumber.getText().isEmpty()) {
+						requireddeletebooknumber.setText("Required");
+						return;
+					}
+					
+					try {
+						Integer.parseInt(deletebooksearchbooknumber.getText());
+					} catch (Exception e2) {
+						requireddeletebooknumber.setText("Integer only");
+						return;
+					}
+					
 					deletebook();
 				}
 			}
@@ -1621,6 +1821,17 @@ public class StudentInformationAndBookDetails extends JFrame {
 		btnNewButton_1 = new JButton("Delete");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(deletebooksearchbooknumber.getText().isEmpty()) {
+					requireddeletebooknumber_1.setText("See book information first");
+					return;
+				}
+				
+				if(deletebookbooknumber.getText().isEmpty()) {
+					requireddeletebooknumber_1.setText("No data found");
+					return;
+				}
+				
 				try {
 					deletebookinformationfromdatabase();
 				} catch (SQLException e1) {
@@ -1642,6 +1853,16 @@ public class StudentInformationAndBookDetails extends JFrame {
 		lblNewLabel_42.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblNewLabel_42.setBounds(602, 61, 222, 40);
 		deletebookinformation.add(lblNewLabel_42);
+		
+		requireddeletebooknumber = new JLabel("");
+		requireddeletebooknumber.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requireddeletebooknumber.setBounds(242, 10, 222, 40);
+		deletebookinformation.add(requireddeletebooknumber);
+		
+		requireddeletebooknumber_1 = new JLabel("");
+		requireddeletebooknumber_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		requireddeletebooknumber_1.setBounds(10, 141, 330, 40);
+		deletebookinformation.add(requireddeletebooknumber_1);
 		
 		showallbook = new JPanel();
 		showallbook.setBackground(new Color(60, 179, 113));
@@ -1840,6 +2061,17 @@ void setEmptyJfieldOfAddStudentInformation() {
 	requiredaddstudentdob.setText(null);
 }
 		public void editstudentinformationintodatabase() {
+			 
+			 if(editsearchstudentid.getText().isEmpty()) {
+				 requirededitstudentid_1.setText("See student details first!!");
+				 return;
+			 }
+			 
+			 if(editstudentid.getText().isEmpty()) {
+				 requirededitstudentid_1.setText("No data found");
+				 return;
+			 }
+			 
 			 EditStudentInformations editstudent = new EditStudentInformations();
 			 StudentInformation student = new StudentInformation();
 			 student.setStudentid(Integer.parseInt(editsearchstudentid.getText()));
@@ -1887,7 +2119,8 @@ void setEmptyJfieldOfAddStudentInformation() {
 					editaddress.setText(rs.getString("Address"));
 					editdob.setDate(rs.getDate("Date_of_birth"));
 				} catch (Exception e2) {
-					JOptionPane.showConfirmDialog(null, e2);
+					requirededitstudentid_1.setText("No data found");
+					return;
 				}
 				finally {
 					try {
@@ -1917,7 +2150,8 @@ void setEmptyJfieldOfAddStudentInformation() {
 					deletedob.setDate(rs.getDate("Date_of_birth"));
 					deletedepartment.setText(rs.getString("Department"));
 				} catch (Exception e2) {
-					JOptionPane.showConfirmDialog(null, e2);
+					requireddeletestudentid_1.setText("No data found");
+					return;
 				}
 				finally {
 					try {
@@ -1931,7 +2165,17 @@ void setEmptyJfieldOfAddStudentInformation() {
 		
 
      	public void deletestudentinformationfromdatabase() {
-			
+     		
+     		if(deletesearchstudentid.getText().isEmpty()) {
+     			requireddeletestudentid_1.setText("See the detail of student first!");
+     			return;
+     			
+     		}
+     		if(deletestudentid.getText().isEmpty()) {
+     			requireddeletestudentid_1.setText("No data found");
+     			return;
+     		}
+
 			StudentInformation information = new StudentInformation();
 			DeleteStudentInformation del = new DeleteStudentInformation();
 			information.setStudentid(Integer.parseInt(deletesearchstudentid.getText()));
@@ -1960,7 +2204,7 @@ void setEmptyJfieldOfAddStudentInformation() {
      	public void editbookinformation() {
      		
      		if (editbooksearchbooknumber.getText().isEmpty()) {
-     			requirededitbookbooknumber.setText("Required");
+     			requirededitbookbooknumber_1.setText("See detail of book first!");
      			return;
      		}
      		
@@ -1968,6 +2212,11 @@ void setEmptyJfieldOfAddStudentInformation() {
      			Integer.parseInt(editbooksearchbooknumber.getText());
      		}catch(NumberFormatException e) {
      			requirededitbookbooknumber.setText("Integer only");
+     			return;
+     		}
+     		
+     		if(editbookbooknumber.getText().isEmpty()) {
+     			requirededitbookbooknumber_1.setText("No data found");
      			return;
      		}
      		
@@ -2017,7 +2266,7 @@ void setEmptyJfieldOfAddStudentInformation() {
     			editbookbookname.setText(rs.getString(2));
     			editbookauthor.setText(rs.getString(3));
     		} catch (Exception e) {
-    			requirededitbookbooknumber.setText("No data found");
+    			requirededitbookbooknumber_1.setText("No data found");
     			return;
     		}
     		finally {
@@ -2046,7 +2295,8 @@ void setEmptyJfieldOfAddStudentInformation() {
     			deletebookauthor.setText(rs.getString(3));
     			deletebookdepartment.setText(rs.getString(4));
     		} catch (Exception e) {
-    			JOptionPane.showConfirmDialog(null, e.toString());
+    			requireddeletebooknumber_1.setText("No data found");
+    			return;
     		}
     		finally {
     			try {
@@ -2065,7 +2315,6 @@ void setEmptyJfieldOfAddStudentInformation() {
      		book.setBooknumber(Integer.parseInt(deletebooksearchbooknumber.getText()));
      		Deletebookinformation delete = new Deletebookinformation();
      		if ( delete.deletebookinformation(book) ) {
-     			
      			JOptionPane.showConfirmDialog(null, "Deleted");
      		}else {
      			JOptionPane.showConfirmDialog(null, "Not Deleted");
@@ -2160,6 +2409,7 @@ void setEmptyJfieldOfAddStudentInformation() {
 				con.close();
 			} catch (Exception e2) {
 				requiredstudentid.setText("No data found");
+				studentname.setText(null);
 				return;
 			}	
 			finally {
@@ -2170,8 +2420,16 @@ void setEmptyJfieldOfAddStudentInformation() {
 					stt.close();
 				} catch (Exception e3) {
 					requiredstudentid.setText("No data found");
+					studentname.setText(null);
 					return;
 				}
 			}
      	}
+    
+    void setNullAddBookInformation() {
+    	requiredaddbooknumber.setText(null);
+		requiredaddbookname.setText(null);
+		requiredaddbookauthor.setText(null);
+    }
 }
+

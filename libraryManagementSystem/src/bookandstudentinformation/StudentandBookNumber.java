@@ -129,8 +129,6 @@ public class StudentandBookNumber extends JFrame {
 	}
 	
 	public void addbook() {
-		// creating the object of the StudenInformationAndBookDetails
-		StudentInformationAndBookDetails studentandbookinformation = new StudentInformationAndBookDetails();
 		
 		BookInformation book = new BookInformation();
 		StudentInformation student = new StudentInformation();
@@ -139,9 +137,10 @@ public class StudentandBookNumber extends JFrame {
 		AddBookIntoStudentRecord add = new AddBookIntoStudentRecord();
 		if ( add.addbookintostudentrecord(book, student)) {
 			JOptionPane.showConfirmDialog(null, "Book added successfully");
-			studentandbookinformation.showStudentAndBookInformation();
+			booknumber.setText(null);
 		}else {
 			JOptionPane.showConfirmDialog(null, "Book Not added!!");
+			requiredaddbookbooknumber.setText(null);
 		}
 	}
 	
